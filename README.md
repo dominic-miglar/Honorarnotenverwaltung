@@ -11,9 +11,10 @@ TODO
 
 ## Folder structure
 
-| Folder | Description |
-------------------------
-| avocado-backend | Honorarnotenverwaltung Backend (Django + RESTFramework) |
-| avocado-frontend | Honorarnotenverwaltung Frontend (AngularJS) |
+| Folder           | Description |
+| ---------------- | ------------------------------------------------------- |
+| avocado-backend  | Honorarnotenverwaltung Backend (Django + RESTFramework) |
+| avocado-frontend | Honorarnotenverwaltung Frontend (AngularJS)             |
+
 
 
