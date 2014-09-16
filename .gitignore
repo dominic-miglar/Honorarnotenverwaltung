@@ -1,3 +1,12 @@
+# do not include local settings in git repo
+local_settings.py
+
+# logs
+*.log
+
+# dev db
+*.sqlite3
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -52,3 +61,4 @@ docs/_build/
 
 # PyBuilder
 target/
+

@@ -9,6 +9,14 @@ HTL Villach, 5AHITN 2014/15, Informationstechnologische Projekte
 
 TODO
 
+* Clone the repo
+
+### Virtualenv Setup
+
+python3 -m venv avocado
+source avocado/bin/activate
+pip install django djangorestframework markdown django-filter 
+
 ## Folder structure
 
 | Folder           | Description |

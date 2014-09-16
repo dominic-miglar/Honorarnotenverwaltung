@@ -1,40 +1,85 @@
 from django.db import models
-
-# Create your models here.
+from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
-    # user = Django Auth User
+    user = models.OneToOneField(User)
     address = models.ForeignKey('Address', null=True, blank=True)
     bank_account = models.ForeignKey('BankAccount', null=True, blank=True)
     uid = models.CharField('UID', max_length=255, null=True, blank=True)
-    last_name = models.CharField('Lastname', max_length=255, null=True, blank=True)
-    first_name = models.CharField('Firstname', max_length=255, null=True, blank=True)
-    telephone_number = Models.CharField('Telephone Number', max_length=255, null=True, blank=True)
+    last_name = models.CharField('Last Name', max_length=255)
+    first_name = models.CharField('First Name', max_length=255)
+    telephone_number = models.CharField('Telephone Number', max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        return '{0} {1}'.format(self.last_name.upper(), self.first_name)
+
+    class Meta:
+        verbose_name = 'User Profile'
+        verbose_name_plural = 'User Profiles'
+
 
 class Customer(models.Model):
     address = models.ForeignKey('Address', null=True, blank=True)
     bank_account = models.ForeignKey('BankAccount', null=True, blank=True)
-    last_name = models.CharField('Lastname', max_length=255, null=True, blank=True)
-    first_name = models.CharField('Firstname', max_length=255, null=True, blank=True)
+    last_name = models.CharField('Last Name', max_length=255)
+    first_name = models.CharField('First Name', max_length=255)
     email = models.EmailField('E-Mail Address', max_length=75, null=True, blank=True)
-    telephone = models.CharField('Telephone Number', max_length=255, null=True, blank=True)
+    telephone_number = models.CharField('Telephone Number', max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        retval = '{0} {1}'.format(self.last_name.upper(), self.first_name)
+        if self.address:
+            retval += ' - {0} {1} {2}, {3}'.format(
+                self.address.country,
+                self.address.postal_code, 
+                self.address.town, 
+                self.address.street_address)
+        return retval
+
+    class Meta:
+        verbose_name = 'Customer'
+        verbose_name_plural = 'Customers'
+
 
 class Address(models.Model):
-    street_address = models.CharField('Street', max_length=255, null=True, blank=True)
-    postal_code = models.CharField('Postal Code', max_length=255, null=True, blank=True)
-    country = models.CharField('Country', max_length=255, null=True, blank=True)
+    street_address = models.CharField('Street', max_length=255)
+    postal_code = models.CharField('Postal Code', max_length=255)
+    town = models.CharField('Town', max_length=255)
+    country = models.CharField('Country', max_length=255)
+
+    def __str__(self):
+        return '{0} {1} {2}, {3}'.format(
+            self.country,
+            self.postal_code,
+            self.town,
+            self.street_address)
+
+    class Meta:
+        verbose_name = 'Address'
+        verbose_name_plural = 'Addresses'
+
 
 class BankAccount(models.Model):
-    iban = models.CharField('IBAN', max_length=255, null=True, blank=True)
+    iban = models.CharField('IBAN', max_length=255)
     bic = models.CharField('BIC', max_length=255, null=True, blank=True)
 
+    def __str__(self):
+        retval = '{0}'.format(self.iban)
+        if self.bic:
+            retval += ' - {0}'.format(self.bic)
+        return retval
+
+    class Meta:
+        verbose_name = 'Bank Account'
+        verbose_name_plural = 'Bank Accounts'
+
+
 class Invoice(models.Model):
-    services = models.OneToMany('ConsumedService')
-    # Ausstellungsdatum
-    exhibition_date = models.DateTimeField('Exhibition Date', auto_add_now=True)
-    # Ein Lieferungs- bzw. Leistungsdatum bzw. einen passenden Zeitraum der Leistung
-    delivery_date = models.DateTimeField('Delivery Date')
-    # Umsatzsteuerarten
+    issuer = models.ForeignKey('UserProfile')
+    customer = models.ForeignKey('Customer')
+    #services = models.OneToMany('ConsumedService')
+    exhibition_date = models.DateTimeField('Exhibition Date', auto_now_add=True)
+    delivery_date = models.DateTimeField('Delivery Date', auto_now_add=True)
     SUBJECT_TO_VAT = 'STVAT'
     VAT_EXEMPT = 'VATEX'
     PHONY_VAT_EXEMPT = 'PVATE'
@@ -43,28 +88,51 @@ class Invoice(models.Model):
         (VAT_EXEMPT, 'VAT exempt'),             # Umsatzsteuerbefreit
         (PHONY_VAT_EXEMPT, 'Phony VAT exempt'), # Unecht Umsatzsteuerbefreit
     )
-    vat_type = models.CharField(max_length=5, choices=VAT_CHOICES, default=SUBJECT_TO_VAT)
-    hours = None
+    vat_type = models.CharField(
+        'VAT Type', max_length=5, choices=VAT_CHOICES, default=SUBJECT_TO_VAT)
+
+    def __str__(self):
+        return '{0} - {1} - {2}'.format(self.id, self.exhibition_date, self.vat_type)
+
+    class Meta:
+        verbose_name = 'Invoice'
+        verbose_name_plural = 'Invoices'
 
 
 class Service(models.Model):
-    # link to userprofile - user which provides / provided this service
-    # customer id - customer which consumed this service
-    name = models.CharField('Service Name', max_length=255, null=True, blank=True)
-    description = models.CharField('Service Description', max_length=255, null=True, blank=True)
+    name = models.CharField('Service Name', max_length=255)
+    description = models.CharField('Service Description', max_length=255)
     FLAT_RATE_BILLING = 'FR'
     HOURLY_RATE_BILLING = 'HR'
     BILLING_TYPE_CHOICES = (
         (FLAT_RATE_BILLING, 'Flat Rate'),
         (HOURLY_RATE_BILLING, 'Hourly Rate'),
     )
-    billing_type = models.CharField(max_length=2, choices=BILLING_TYPE_CHOICES, default=HOURLY_RATE_BILLING)
-    stundensatz = None
-    pauschalpreis = None
+    billing_type = models.CharField('Billing Type', max_length=2, choices=BILLING_TYPE_CHOICES, default=HOURLY_RATE_BILLING)
+    cost = models.FloatField('Cost')
+
+    def __str__(self):
+        return '{0} - {1} {2}'.format(self.name, str(self.cost), self.billing_type)
+
+    class Meta:
+        verbose_name = 'Service'
+        verbose_name_plural = 'Services'
 
 
 class ConsumedService(models.Model):
     service = models.ForeignKey('Service')
+    invoice = models.ForeignKey('Invoice')    
     consumed = models.FloatField('Hours consumed', null=True, blank=True)
-    # if service is flat rate set this to 1 automatically
+
+    def save(self, *args, **kwargs):
+        if(self.service.billing_type == self.service.FLAT_RATE_BILLING or not self.consumed):
+            self.consumed = 1
+        super(ConsumedService, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return '{0} {1}h - {2}'.format(self.service.name, self.consumed, self.invoice.id)
+
+    class Meta:
+        verbose_name = 'Consumed Service'
+        verbose_name_plural = 'Consumed Services'
 
