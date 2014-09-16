@@ -2,8 +2,8 @@
 
 HTL Villach, 5AHITN 2014/15, Informationstechnologische Projekte
 
-Alexander Toch
-Dominic Miglar
+* Alexander Toch
+* Dominic Miglar
 
 ## Setup Guide
 
