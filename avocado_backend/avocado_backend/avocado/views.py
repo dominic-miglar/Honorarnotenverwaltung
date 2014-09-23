@@ -1,5 +1,10 @@
 from rest_framework import viewsets
+from django.contrib.auth.models import User
 from avocado_backend.avocado import models, filtersets, serializers
+
+class UserViewSet(viewsets.ModelViewSet):
+	queryset = User.objects.all()
+	serializer_class = serializers.UserSerializer
 
 class UserProfileViewSet(viewsets.ModelViewSet):
 	queryset = models.UserProfile.objects.all()
