@@ -2,7 +2,8 @@
 
 var avocadoApp = angular.module('avocadoApp', [
     'ngRoute',
-    'ngResource'
+    'ngResource',
+    'ngCookies'
     ])
 
 avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
@@ -19,7 +20,7 @@ avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
             controller: 'CustomersCtrl'
         }).
         when('/customers/:customer_id', {
-            title: 'Kunde - Detail'
+            title: 'Kunde - Detail',
             templateUrl: 'views/customer.html',
             controller: 'CustomerCtrl'
         }).
