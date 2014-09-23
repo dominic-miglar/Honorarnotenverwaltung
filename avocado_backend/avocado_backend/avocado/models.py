@@ -9,6 +9,7 @@ class UserProfile(models.Model):
     last_name = models.CharField('Last Name', max_length=255)
     first_name = models.CharField('First Name', max_length=255)
     telephone_number = models.CharField('Telephone Number', max_length=255, null=True, blank=True)
+    mobile_phone_number = models.CharField('Mobile Phone Number', max_length=255, null=True, blank=True)
 
     def __str__(self):
         return '{0} {1}'.format(self.last_name.upper(), self.first_name)
@@ -23,8 +24,12 @@ class Customer(models.Model):
     bank_account = models.ForeignKey('BankAccount', null=True, blank=True)
     last_name = models.CharField('Last Name', max_length=255)
     first_name = models.CharField('First Name', max_length=255)
+    birthdate = models.DateTimeField('Birthdate', null=True, blank=True)
     email = models.EmailField('E-Mail Address', max_length=75, null=True, blank=True)
     telephone_number = models.CharField('Telephone Number', max_length=255, null=True, blank=True)
+    mobile_phone_number = models.CharField('Mobile Phone Number', max_length=255, null=True, blank=True)
+    recommended_from = models.CharField('Recommended from', max_length=255, null=True, blank=True)
+    date_created = models.DateTimeField('Creation Date', auto_now_add=True)
 
     def __str__(self):
         retval = '{0} {1}'.format(self.last_name.upper(), self.first_name)
@@ -91,6 +96,19 @@ class Invoice(models.Model):
     vat_type = models.CharField(
         'VAT Type', max_length=5, choices=VAT_CHOICES, default=SUBJECT_TO_VAT)
 
+    OPEN = 'OPN'
+    CREATED = 'CRE'
+    CANCELED = 'CAN'
+    PAID = 'PAD'
+    STATUS_CHOICES = (
+        (OPEN, 'Invoice is open for payment'),     # Bestellung abgesendet. Warte auf Bezahlung
+        (CREATED, 'Invoice created. Editing allowed'),             # Bestellung erstellt und noch editierbar
+        (CANCELED, 'Invoice canceled'), # Bestellung storniert
+        (PAID, 'Invoice '), # Bestellung bezahlt
+    )
+    status = models.CharField(
+        'Status', max_length=5, choices=STATUS_CHOICES, default=CREATED)
+
     def __str__(self):
         return '{0} - {1} - {2}'.format(self.id, self.exhibition_date, self.vat_type)
 
@@ -121,8 +139,10 @@ class Service(models.Model):
 
 class ConsumedService(models.Model):
     service = models.ForeignKey('Service')
-    invoice = models.ForeignKey('Invoice')    
+    customer = models.ForeignKey('Customer')    
+    invoice = models.ForeignKey('Invoice', null=True, blank=True)
     consumed = models.FloatField('Hours consumed', null=True, blank=True)
+    date_consumed = models.DateTimeField('Date consumed', auto_now_add=True)
 
     def save(self, *args, **kwargs):
         if(self.service.billing_type == self.service.FLAT_RATE_BILLING or not self.consumed):
