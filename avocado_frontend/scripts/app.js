@@ -3,16 +3,18 @@
 var avocadoApp = angular.module('avocadoApp', [
     'ngRoute',
     'ngResource',
-    'ngCookies'
-    ])
+    'ngCookies',
+    'customersCtrl',
+    'avocadoApi',
+    ]);
 
 avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
     function AppConfig($routeProvider, $locationProvider, $httpProvider) {
         $routeProvider.
         when('/', {
             title: 'avocado Home',
-            templateUrl: 'views/main.html',
-            controller: 'MainCtrl'    
+            templateUrl: 'views/main.html'
+            //controller: 'MainCtrl'    
         }).
         when('/customers/', {
             title: 'Kundenverwaltung',
@@ -21,8 +23,12 @@ avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
         }).
         when('/customers/:customer_id', {
             title: 'Kunde - Detail',
-            templateUrl: 'views/customer.html',
-            controller: 'CustomerCtrl'
+            templateUrl: 'views/customer.html'
+            //controller: 'CustomerCtrl'
+        }).
+        when('/settings/', {
+            title: 'Einstellungen',
+            templateUrl: 'views/settings.html'
         }).
         otherwise({
             redirectTo: '/'

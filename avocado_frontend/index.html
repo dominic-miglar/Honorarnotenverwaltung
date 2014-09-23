@@ -1,36 +1,33 @@
 <!DOCTYPE html>
 <html lang="de" ng-app="avocadoApp">
-
-<head>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title ng-bind="title">cloudmanagementguiApp</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title ng-bind="title">avocado - Honorarnotenverwaltung</title>
     <link rel="icon" type="image/png" href="img/favicon.png" />
-
-    <link rel="stylesheet" href="styles/bootstrap.css">
-    <link rel="stylesheet" href="styles/font-awesome.css">
-    <link rel="stylesheet" href="styles/sb-admin.css">
-
+    <link href="styles/bootstrap.css" rel="stylesheet">
+    <link href="styles/sb-admin.css" rel="stylesheet">
+    <link href="styles/font-awesome.css" rel="stylesheet" type="text/css">
     <script src="scripts/vendor/jquery/jquery-1.11.0.js"></script>
     <script src="scripts/vendor/angularjs/angular.js"></script>
     <script src="scripts/vendor/angularjs/angular-resource.js"></script>
     <script src="scripts/vendor/angularjs/angular-route.js"></script>
     <script src="scripts/vendor/angularjs/angular-cookies.js"></script>
-    
+    <!-- BEGIN avocado Application -->
     <script src="scripts/conf.js"></script>
-
     <script src="scripts/app.js"></script>
-
-</head>
-
-<body>
+    <script src="scripts/controllers/CustomerCtrl.js"></script>
+    <script src="scripts/controllers/CustomersCtrl.js"></script>
+    <script src="scripts/controllers/MainCtrl.js"></script>
+    <script src="scripts/services/Api.js"></script>
+    <!-- END avocado Application -->
+  </head>
+  <body>
     <div class="view-container">
-        <div ng-view class="view-frame">
-        </div>
+      <div ng-view class="view-frame">
+      </div>
     </div>
-    
-    
     <script src="scripts/vendor/bootstrap/bootstrap.js"></script>
-</body>
-
+  </body>
 </html>
