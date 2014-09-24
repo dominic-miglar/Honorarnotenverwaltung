@@ -5,6 +5,7 @@ var avocadoApp = angular.module('avocadoApp', [
     'ngResource',
     'ngCookies',
     'customersCtrl',
+    'customerCtrl',
     'avocadoApi',
     ]);
 
@@ -16,15 +17,15 @@ avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
             templateUrl: 'views/main.html'
             //controller: 'MainCtrl'    
         }).
+        when('/customers/:customerId/', {
+            title: 'Kunde - Detail',
+            templateUrl: 'views/customer.html',
+            controller: 'CustomerCtrl'
+        }).
         when('/customers/', {
             title: 'Kundenverwaltung',
             templateUrl: 'views/customers.html',
             controller: 'CustomersCtrl'
-        }).
-        when('/customers/:customer_id', {
-            title: 'Kunde - Detail',
-            templateUrl: 'views/customer.html'
-            //controller: 'CustomerCtrl'
         }).
         when('/settings/', {
             title: 'Einstellungen',

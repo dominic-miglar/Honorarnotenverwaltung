@@ -27,6 +27,12 @@ body {
     background-color: #fff;
 }
 
+.page-header {
+  padding-bottom: 9px;
+  margin: 5px 0 20px;
+  border-bottom: 1px solid #eee;
+}
+
 .huge {
     font-size: 50px;
     line-height: normal;

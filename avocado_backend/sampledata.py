@@ -83,7 +83,8 @@ def create_sample_user_data():
 		uid='UID223432',
 		last_name='Hugo',
 		first_name='Oguh',
-		telephone_number='+436601234567'
+		telephone_number='+436601234567',
+                mobile_phone_number='+436605498711'
 	)
 	userprofile_mongo = UserProfile.objects.create(
 		user=user_mongo,
@@ -168,17 +169,20 @@ def create_sample_user_data():
 	# Consume Services and link it to the just created Invoice
 	consumed_beratung = ConsumedService.objects.create(
 		service=service_beratung,
-		invoice=invoice_herbert
+		invoice=invoice_herbert,
+                customer=customer_herbert
 	)
 	consumed_edv = ConsumedService.objects.create(
 		service=service_edv,
 		invoice=invoice_herbert,
-		consumed=8
+		consumed=8,
+                customer=customer_herbert
 	)
 	consumed_cleaning = ConsumedService.objects.create(
 		service=service_cleaning,
 		invoice=invoice_herbert,
-		consumed=3
+		consumed=3,
+                customer=customer_herbert
 	)
 
 
