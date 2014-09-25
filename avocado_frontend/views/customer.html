@@ -1,0 +1,275 @@
+<!-- TODO: http://blog.yodersolutions.com/bootstrap-form-validation-done-right-in-angularjs/ -->
+<div id="wrapper">
+  <div ng-include src="'views/nav.html'"></div>
+  <div id="page-wrapper">
+    <div class="container-fluid">
+      <!-- Page Heading -->
+      <div class="col-lg-12">
+        <div class="row">
+          <ol class="breadcrumb">
+            <li>
+              <i class="fa fa-users"></i>  <a href="/#/customers/">Kundenverwaltung</a>
+            </li>
+            <li class="active">
+              <i class="fa fa-user"></i> {{ customer.first_name }} {{ customer.last_name }}
+            </li>
+          </ol>
+          <div ng-show="editEnabled == false" ng-init="editEnabled = false">
+            <h1 class="page-header">
+              {{ customer.first_name }} {{ customer.last_name }}
+              <button class="btn btn-default pull-right" type="button" ng-click="editEnabled = true" ng-init="editEnabled = false">
+                Bearbeiten <i class="fa fa-edit"></i>
+              </button>
+            </h1>
+          </div>
+          <div ng-show="editEnabled != false">
+          <!--#######################################################################################################################################################################-->
+            <button class="btn btn-danger pull-right" type="button" ng-click="editEnabled = false; updateCustomer(customer);" 
+            ng-show="verifyEditInput()">
+              Speichern <i class="glyphicon glyphicon-floppy-disk"></i>
+            </button>
+            <button class="btn btn-disabled pull-right" type="button" disabled="disabled" 
+            ng-show="verifyEditInput() == false">
+              Speichern <i class="glyphicon glyphicon-floppy-disk"></i>
+            </button>
+            <div class="table-responsive" style="padding-top: 55px;">
+              <table class="table table-holver table-condensed table-condensed">
+                <tbody>
+                  <tr>
+                    <th class="col-md-2">Name</th>
+                    <th class="col-md-10"></th>
+                  </tr>
+                  <tr>
+                    <td class="active">
+                      <span class="pull-right">Vorname</span>
+                    </td>
+                    <td>
+                      <form name="formCustomerFirstname" class="form-inline" role="form">
+                        <input type="text" class="form-control input-sm input-sm" name="customerFirstname" ng-model="customer.first_name" required />
+                        <span class="text-danger" ng-show="formCustomerFirstname.customerFirstname.$valid == false">Dieses Feld ist erforderlich</span>
+                      </form>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="active">
+                      <span class="pull-right">Nachname</span>
+                    </td>
+                    <td>
+                      <form name="formCustomerLastname" class="form-inline" role="form">
+                        <input type="text" class="form-control input-sm input-sm" name="customerLastname" ng-model="customer.last_name" required />
+                        <span class="text-danger" ng-show="formCustomerLastname.customerLastname.$valid == false">Dieses Feld ist erforderlich</span>
+                      </form>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- ####################################################################### -->
+          <!--<h3>Anschrift</h3>-->
+          <div class="table-responsive">
+            <table class="table table-holver table-condensed">
+              <tbody>
+                <tr>
+                  <th class="col-md-2">Anschrift</th>
+                  <th class="col-md-10"></th>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <span class="pull-right">Land</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    {{ customer.address.country }}
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form name="formCustomerAddressCountry" class="form-inline" role="form">
+                        <input type="text" class="form-control input-sm" name="customerAddressCountry" ng-model="customer.address.country" required />
+                        <span class="text-danger" ng-show="formCustomerAddressCountry.customerAddressCountry.$valid == false">Dieses Feld ist erforderlich</span>
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <span class="pull-right">Ort</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    {{ customer.address.postal_code }} {{ customer.address.town }}
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form name="formCustomerAddressPcTown" class="form-inline" role="form">
+                        <input type="text" class="form-control input-sm" name="customerAddressPostalCode" ng-model="customer.address.postal_code" required />
+                        <input type="text" class="form-control input-sm" name="customerAddressTown" ng-model="customer.address.town"  required />
+                        <span class="text-danger" ng-show="formCustomerAddressPcTown.customerAddressPostalCode.$valid == false || formCustomerAddressPcTown.customerAddressTown.$valid == false">Dieses Feld ist erforderlich</span>
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <span class="pull-right">Straße</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    {{ customer.address.street_address }}
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form name="formCustomerAddressStreetAddress" class="form-inline" role="form">
+                        <input type="text" class="form-control input-sm" name="customerAddressStreetAddress" ng-model="customer.address.street_address" required />
+                        <span class="text-danger" ng-show="formCustomerAddressStreetAddress.customerAddressStreetAddress.$valid == false">Dieses Feld ist erforderlich</span>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--<h3>Persönliche Daten</h3>-->
+          <div class="table-responsive">
+            <table class="table table-holver table-condensed">
+              <tbody>
+                <tr>
+                  <th class="col-md-2">Persönliche Daten</th>
+                  <th class="col-md-10"></th>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <!--<i class="fa fa-phone"></i>-->
+                    <span class="pull-right">Haustelefon</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    {{ customer.telephone_number }}
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form class="form-inline" role="form">
+                        <input type="text" class="form-control input-sm" name="customerTelephoneNumber" ng-model="customer.telephone_number" />
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <!--<i class="fa fa-mobile-phone"></i>-->
+                    <span class="pull-right">Mobiltelefon</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    {{ customer.mobile_phone_number }}
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form class="form-inline" role="form">
+                        <input type="text" class="form-control input-sm" name="customerMobilePhoneNumber" ng-model="customer.mobile_phone_number" />
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <!--<i class="fa fa-envelope"></i>-->
+                    <span class="pull-right">E-Mail</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    <a href="mailto:{{ customer.email }}">
+                      {{ customer.email }}
+                    </a>
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form class="form-inline" role="form">
+                        <input type="email" class="form-control input-sm" name="customerEmail" ng-model="customer.email" />
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <!--<i class="fa fa-birthday-cake"></i>-->
+                    <span class="pull-right">Geburtsdatum</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    {{ customer.birthdate | date:'yyyy-MM-dd' }}
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form class="form-inline" role="form">
+                        <input type="date" class="form-control input-sm" name="customerBirthdate" ng-model="customer.birthdate" />
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--<h3>Bankverbindung</h3>-->
+          <div class="table-responsive">
+            <table class="table table-holver table-condensed">
+              <tbody>
+                <tr>
+                  <th class="col-md-2">Bankverbindung</th>
+                  <th class="col-md-10"></th>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <span class="pull-right">IBAN</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    {{ customer.bank_account.iban }}
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form class="form-inline" role="form">
+                        <input type="text" class="form-control input-sm" name="customerBankAccountIban" ng-model="customer.bank_account.iban" />
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <span class="pull-right">BIC</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    {{ customer.bank_account.bic }}
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form class="form-inline" role="form">
+                        <input type="text" class="form-control input-sm" name="customerBankAccountBic" ng-model="customer.bank_account.bic" />
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!--<h3>Sonstige Informationen</h3>-->
+          <div class="table-responsive">
+            <table class="table table-holver table-condensed">
+              <tbody>
+                <tr>
+                  <th class="col-md-2">Sonstige Informationen</th>
+                  <th class="col-md-10"></th>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <span class="pull-right">Erstkontakt</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    {{ customer.date_created | date:'yyyy-MM-dd' }}
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form class="form-inline" role="form">
+                        <input type="date" class="form-control input-sm" name="customerDateCreated" ng-model="customer.date_created" />
+                    </form>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="active">
+                    <span class="pull-right">Empfohlen von</span>
+                  </td>
+                  <td ng-show="editEnabled == false">
+                    {{ customer.recommended_from }}
+                  </td>
+                  <td ng-show="editEnabled != false">
+                    <form class="form-inline" role="form">
+                        <input type="text" class="form-control input-sm" name="customerRecommendedFrom" ng-model="customer.recommended_from" />
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- ####################################################################### -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+  </div>
+  <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
