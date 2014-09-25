@@ -15,7 +15,7 @@ TODO
 
 python3 -m venv avocado
 source avocado/bin/activate
-pip install django djangorestframework markdown django-filter django-cors-headers
+pip install django djangorestframework markdown django-filter django-cors-headers mysqlclient
 
 ## Folder structure
 
