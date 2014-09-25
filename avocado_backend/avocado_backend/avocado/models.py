@@ -25,7 +25,7 @@ class Customer(models.Model):
     last_name = models.CharField('Last Name', max_length=255)
     first_name = models.CharField('First Name', max_length=255)
     birthdate = models.DateTimeField('Birthdate', null=True, blank=True)
-    email = models.EmailField('E-Mail Address', max_length=75, null=True, blank=True)
+    email = models.CharField('E-Mail Address', max_length=75, null=True, blank=True)
     telephone_number = models.CharField('Telephone Number', max_length=255, null=True, blank=True)
     mobile_phone_number = models.CharField('Mobile Phone Number', max_length=255, null=True, blank=True)
     recommended_from = models.CharField('Recommended from', max_length=255, null=True, blank=True)

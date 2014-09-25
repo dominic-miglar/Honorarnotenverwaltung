@@ -131,3 +131,12 @@ CORS_ALLOW_HEADERS = (
         'x-csrftoken',
         'content-disposition',
     )
+
+#####################################################
+# loads the production values from the settings file
+#####################################################
+try:
+    from .local_settings import *
+except ImportError:
+    pass
+

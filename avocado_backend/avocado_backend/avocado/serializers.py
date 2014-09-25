@@ -14,12 +14,6 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('id', 'user', 'address', 'bank_account', 'uid', 'last_name', 'first_name', 'telephone_number', 'mobile_phone_number')
         read_only_fields = []
 
-class CustomerSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = models.Customer
-        fields = ('id', 'address', 'bank_account', 'last_name', 'first_name', 'birthdate', 'email', 'telephone_number', 'mobile_phone_number', 'recommended_from', 'date_created',)
-        read_only_fields = []
-
 class AddressSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Address
@@ -48,4 +42,12 @@ class ConsumedServiceSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.ConsumedService
         fields = ('id', 'service', 'invoice', 'consumed', 'date_consumed')
+        read_only_fields = []
+
+class CustomerSerializer(serializers.HyperlinkedModelSerializer):
+    bank_account = BankAccountSerializer(required=False)
+    address = AddressSerializer()
+    class Meta:
+        model = models.Customer
+        fields = ('id', 'address', 'bank_account', 'last_name', 'first_name', 'birthdate', 'email', 'telephone_number', 'mobile_phone_number', 'recommended_from', 'date_created',)
         read_only_fields = []
