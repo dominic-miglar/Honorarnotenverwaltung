@@ -7,7 +7,10 @@ var avocadoApp = angular.module('avocadoApp', [
     'mainCtrl',
     'customersCtrl',
     'customerCtrl',
+    'servicesCtrl',
     'avocadoApi',
+    'loginCtrl',
+    'radioButtonGroup',
     ]);
 
 avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
@@ -28,6 +31,11 @@ avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
             templateUrl: 'views/customers.html',
             controller: 'CustomersCtrl'
         }).
+        when('/services/', {
+            title: 'Services',
+            templateUrl: 'views/services.html',
+            controller: 'ServicesCtrl'
+        }).
         when('/settings/', {
             title: 'Einstellungen',
             templateUrl: 'views/settings.html'
@@ -43,7 +51,8 @@ avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
 avocadoApp.run(['$rootScope', '$http', '$cookieStore',
     function($rootScope, $http, $cookieStore) {
         if($cookieStore.get('djangotoken')) {
-            $http.defaults.headers.commo.Authorization = 'Token ' + $cookieStore.get('djangotoken');
+            $http.defaults.headers.common.Authorization = 'Token ' + $cookieStore.get('djangotoken');
             $http.defaults.headers.post.Authorization = 'Token ' + $cookieStore.get('djangotoken');
+            $rootScope.isLoggedIn = true;
         }
     }]);

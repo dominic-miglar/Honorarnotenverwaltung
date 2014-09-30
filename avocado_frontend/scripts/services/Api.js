@@ -9,30 +9,7 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
         "username": credentials.username,
         "password": credentials.password
       };
-      var result = $http.post(configuration.apiAuthUrl, user_data);
-      result.success(function (response) {
-        $cookieStore.put('djangotoken', response.token);
-        $cookieStore.put('username', credentials.username);
-        // Set HTTP default headers, sent with every request (POST and GET)
-        $http.defaults.headers.post.Authorization = 'Token ' + response.token;
-        $http.defaults.headers.common.Authorization = 'Token ' + response.token;
-        // Set root scope logged in flag
-        $rootScope.isLoggedIn = true;
-        return true;
-      })
-        .error(function (response) {
-          return false; // TODO: return error msg
-        });
-    },
-    logout: function () {
-      // Remove previous set cookies
-      $cookieStore.remove('djangotoken');
-      $cookieStore.remove('username');
-      // Remove setting of default HTTP headers, so they are not sent with every request
-      // anymore
-      $http.defaults.headers.post.Authorization = undefined;
-      $http.defaults.headers.common.Authorization = undefined;
-      return true;
+      return $http.post(configuration.apiAuthUrl, user_data);
     },
     getCustomers: function () {
       return $http.get(configuration.apiUrl + 'customers/');
@@ -55,6 +32,12 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
     },
     createNewCustomer: function(newCustomer) {
       return $http.post(configuration.apiUrl + 'customers/', newCustomer);
+    },
+    getServices: function() {
+      return $http.get(configuration.apiUrl + 'services/');
+    },
+    createNewService: function(newService) {
+      return $http.post(configuration.apiUrl + 'services/', newService);
     },
   };
 });
