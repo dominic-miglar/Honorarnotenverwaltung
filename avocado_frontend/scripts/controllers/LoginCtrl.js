@@ -2,8 +2,16 @@ var loginCtrl = angular.module('loginCtrl', []);
 mainCtrl.controller('LoginCtrl', ['$rootScope', '$scope', '$location', '$http', '$cookieStore', 'Api',
     function ($rootScope, $scope, $location, $http, $cookieStore, Api) {
 
-    	if($cookieStore.get('username')) {
-    		$scope.username = $cookieStore.get('username');
+    	if($cookieStore.get('username') && $cookieStore.get('djangotoken')) {
+    		$rootScope.username = $cookieStore.get('username');
+            
+            var token = $cookieStore.get('djangotoken');
+            
+            // Set HTTP default headers, sent with every request (POST and GET)
+            $http.defaults.headers.post.Authorization = 'Token ' + token;
+            $http.defaults.headers.common.Authorization = 'Token ' + token;
+            // Set root scope logged in flag
+            $rootScope.isLoggedIn = true;
     	}
 
     	//get the entered credentials from the view
@@ -24,7 +32,7 @@ mainCtrl.controller('LoginCtrl', ['$rootScope', '$scope', '$location', '$http', 
     			$http.defaults.headers.common.Authorization = 'Token ' + response.token;
     			// Set root scope logged in flag
     			$rootScope.isLoggedIn = true;
-    			$scope.username = $cookieStore.get('username');
+    			$rootScope.username = $cookieStore.get('username');
     			return true;
     		}).error(function(response) {
     			$rootScope.isLoggedIn = false;
@@ -39,6 +47,8 @@ mainCtrl.controller('LoginCtrl', ['$rootScope', '$scope', '$location', '$http', 
       		// anymore
       		$http.defaults.headers.post.Authorization = undefined;
       		$http.defaults.headers.common.Authorization = undefined;
+            $rootScope.isLoggedIn = false;
+            $rootScope.username = undefined;
       		return true;
     	};
     }]);

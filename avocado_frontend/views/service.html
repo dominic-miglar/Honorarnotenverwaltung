@@ -1,0 +1,130 @@
+<!-- TODO: http://blog.yodersolutions.com/bootstrap-form-validation-done-right-in-angularjs/ -->
+<div id="wrapper">
+    <div ng-include src="'views/nav.html'"></div>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="col-lg-12">
+                <div class="row">
+                    <div ng-hide="isLoggedIn">
+                        <h1 class="page-header">
+                          Bitte loggen Sie sich ein!
+                        </h1>
+                    </div>
+
+                    <div ng-show="isLoggedIn">
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-users"></i>  <a href="./#services/">Serviceverwaltung</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-user"></i> {{ service.name }}
+                            </li>
+                        </ol>
+                        <div ng-show="editEnabled == false" ng-init="editEnabled = false">
+                            <h1 class="page-header">
+              {{ service.name }}
+                <button class="btn btn-danger pull-right" type="button" ng-click="deleteService(service)" style="margin-left:4px;">
+                L&ouml;schen
+              </button>
+              <button class="btn btn-default pull-right" type="button" ng-click="editEnabled = true" ng-init="editEnabled = false">
+                Bearbeiten <i class="fa fa-edit"></i>
+              </button>
+            </h1>
+                        </div>
+                        <!--#######################################################################################################################################################################-->
+                        <button class="btn btn-primary pull-right" type="button" ng-click="editEnabled = false; updateService(service);" ng-show="verifyEditInput()">
+                            Speichern <i class="glyphicon glyphicon-floppy-disk"></i>
+                        </button>
+                        <button class="btn btn-disabled pull-right" type="button" disabled="disabled" ng-show="verifyEditInput() == false">
+                            Speichern <i class="glyphicon glyphicon-floppy-disk"></i>
+                        </button>
+                        <div class="table-responsive" style="padding-top: 55px;">
+                            <table class="table table-holver table-condensed table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <th class="col-md-2">Name</th>
+                                        <th class="col-md-10"></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">
+                                            <span class="pull-right">Name</span>
+                                        </td>
+                                        <td ng-show="editEnabled == false">
+                                            {{ service.name }}
+                                        </td>
+                                        <td ng-show="editEnabled != false">
+                                            <form name="formServiceName" class="form-inline" role="form">
+                                                <input type="text" class="form-control input-sm" name="serviceName" ng-model="service.name" required />
+                                                <span class="text-danger" ng-show="formServiceName.serviceName.$valid == false">Dieses Feld ist erforderlich</span>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">
+                                            <span class="pull-right">Beschreibung</span>
+                                        </td>
+                                        <td ng-show="editEnabled == false">
+                                            {{ service.description }}
+                                        </td>
+                                        <td ng-show="editEnabled != false">
+                                            <form name="formServiceDescription" class="form-inline" role="form">
+                                                <input type="text" class="form-control input-sm" name="serviceDescription" ng-model="service.description" required />
+                                                <span class="text-danger" ng-show="formServiceDescription.serviceDescription.$valid == false">Dieses Feld ist erforderlich</span>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- ####################################################################### -->
+                        <!--<h3>Preise</h3>-->
+                        <div class="table-responsive">
+                            <table class="table table-holver table-condensed">
+                                <tbody>
+                                    <tr>
+                                        <th class="col-md-2">Preis</th>
+                                        <th class="col-md-10"></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">
+                                            <span class="pull-right">Verrechnungstyp</span>
+                                        </td>
+                                        <td ng-show="editEnabled == false">
+                                            {{ service.billing_type }}
+                                        </td>
+                                        <td ng-show="editEnabled != false">
+                                            <form name="formServiceBillingType" class="form-inline" role="form">
+                                                <input type="text" class="form-control input-sm" name="serviceBillingType" ng-model="service.billing_type" required />
+                                                <span class="text-danger" ng-show="formServiceBillingType.serviceBillingType.$valid == false">Dieses Feld ist erforderlich</span>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="active">
+                                            <span class="pull-right">Preis</span>
+                                        </td>
+                                        <td ng-show="editEnabled == false">
+                                            {{ service.cost }}
+                                        </td>
+                                        <td ng-show="editEnabled != false">
+                                            <form name="formServiceCost" class="form-inline" role="form">
+                                                <input type="text" class="form-control input-sm" name="serviceCost" ng-model="service.cost" required />
+                                                <span class="text-danger" ng-show="formServiceCost.serviceCost.$valid == false">Dieses Feld ist erforderlich</span>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- ####################################################################### -->
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->

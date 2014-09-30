@@ -30,6 +30,10 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
       return $http.put(configuration.apiUrl + 'customers/' + customer.id + '/', customer);
       //return $http.patch(configuration.apiUrl + 'customers/' + customer.id + '/', customer);
     },
+    deleteCustomer: function(customer) {
+      return $http.delete(configuration.apiUrl + 'customers/' + customer.id + '/');
+      //return $http.patch(configuration.apiUrl + 'customers/' + customer.id + '/', customer);
+    },
     createNewCustomer: function(newCustomer) {
       return $http.post(configuration.apiUrl + 'customers/', newCustomer);
     },
@@ -39,5 +43,11 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
     createNewService: function(newService) {
       return $http.post(configuration.apiUrl + 'services/', newService);
     },
+    getService: function(serviceId) {
+         return $http.get(configuration.apiUrl + 'services/' + serviceId + '/');
+    },
+    deleteService: function(service) {
+         return $http.delete(configuration.apiUrl + 'services/' + service.id + '/');
+    }
   };
 });
