@@ -5,6 +5,7 @@ var avocadoApp = angular.module('avocadoApp', [
     'ngResource',
     'ngCookies',
     'mainCtrl',
+    'settingsCtrl',
     'customersCtrl',
     'customerCtrl',
     'servicesCtrl',
@@ -44,7 +45,8 @@ avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
         }).
         when('/settings/', {
             title: 'Einstellungen',
-            templateUrl: 'views/settings.html'
+            templateUrl: 'views/settings.html',
+            controller: 'SettingsCtrl'
         }).
         otherwise({
             redirectTo: '/'

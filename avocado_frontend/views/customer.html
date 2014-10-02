@@ -8,10 +8,9 @@
                 <div class="row">
                     <div ng-hide="isLoggedIn">
                         <h1 class="page-header">
-                          Bitte loggen Sie sich ein!
+                        Bitte loggen Sie sich ein!
                         </h1>
                     </div>
-
                     <div ng-show="isLoggedIn">
                         <ol class="breadcrumb">
                             <li>
@@ -23,23 +22,24 @@
                         </ol>
                         <div ng-show="editEnabled == false" ng-init="editEnabled = false">
                             <h1 class="page-header">
-              {{ customer.first_name }} {{ customer.last_name }}
-                <button class="btn btn-danger pull-right" type="button" ng-click="deleteCustomer(customer)" style="margin-left:4px;">
-                L&ouml;schen
-              </button>
-              <button class="btn btn-default pull-right" type="button" ng-click="editEnabled = true" ng-init="editEnabled = false">
-                Bearbeiten <i class="fa fa-edit"></i>
-              </button>
-            </h1>
+                              {{ customer.first_name }} {{ customer.last_name }}
+                              <button class="btn btn-danger pull-right" type="button" ng-click="deleteCustomer(customer)" style="margin-left:4px;">
+                                L&ouml;schen
+                              </button>
+                              <button class="btn btn-default pull-right" type="button" ng-click="editEnabled = true" ng-init="editEnabled = false">
+                                Bearbeiten <i class="fa fa-edit"></i>
+                              </button>
+                            </h1>
                         </div>
                         <div ng-show="editEnabled != false">
-                            <!--#######################################################################################################################################################################-->
-                            <button class="btn btn-primary pull-right" type="button" ng-click="editEnabled = false; updateCustomer(customer);" ng-show="verifyEditInput()">
-                                Speichern <i class="glyphicon glyphicon-floppy-disk"></i>
-                            </button>
-                            <button class="btn btn-disabled pull-right" type="button" disabled="disabled" ng-show="verifyEditInput() == false">
-                                Speichern <i class="glyphicon glyphicon-floppy-disk"></i>
-                            </button>
+                            <h1>
+                              <button class="btn btn-primary pull-right" type="button" ng-click="editEnabled = false; updateCustomer(customer);" ng-show="verifyEditInput()">
+                              Speichern <i class="glyphicon glyphicon-floppy-disk"></i>
+                              </button>
+                              <button class="btn btn-disabled pull-right" type="button" disabled="disabled" ng-show="verifyEditInput() == false">
+                              Speichern <i class="glyphicon glyphicon-floppy-disk"></i>
+                              </button>
+                            </h1>
                             <div class="table-responsive" style="padding-top: 55px;">
                                 <table class="table table-holver table-condensed table-condensed">
                                     <tbody>
@@ -171,8 +171,8 @@
                                         </td>
                                         <td ng-show="editEnabled == false">
                                             <a href="mailto:{{ customer.email }}">
-                      {{ customer.email }}
-                    </a>
+                                                {{ customer.email }}
+                                            </a>
                                         </td>
                                         <td ng-show="editEnabled != false">
                                             <form class="form-inline" role="form">

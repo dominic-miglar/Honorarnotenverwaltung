@@ -1,8 +1,7 @@
 var servicesCtrl = angular.module('serviceCtrl', []);
-servicesCtrl.controller('ServiceCtrl', ['$rootScope', '$scope', '$location', 'Api', '$routeParams',
-  function ($rootScope, $scope, $location, Api, $routeParams) {
-     $rootScope.navActive = 'services';
-
+servicesCtrl.controller('ServiceCtrl', ['$rootScope', '$scope', '$location', '$routeParams', 'Api',
+  function ($rootScope, $scope, $location, $routeParams, Api) {
+    $rootScope.navActive = 'services';
     $scope.serviceId = $routeParams.serviceId;
     
     $scope.updateView = function() {
@@ -23,17 +22,14 @@ servicesCtrl.controller('ServiceCtrl', ['$rootScope', '$scope', '$location', 'Ap
       );
     };
       
-      $scope.deleteService = function(service) {
-        promise = Api.deleteService(service);
-        promise.then(
-        function(result) {
-          //$scope.updateView();
-            $location.path('services');
-        }
-      );  
-      };
+    $scope.deleteService = function(service) {
+      promise = Api.deleteService(service);
+      promise.then(
+      function(result) {
+        $location.path('services');
+      });  
+    };
 
-      //TODO
     $scope.verifyEditInput = function() {
       // initial value
       inputValid = false;
@@ -41,14 +37,14 @@ servicesCtrl.controller('ServiceCtrl', ['$rootScope', '$scope', '$location', 'Ap
 
       valid.name = $scope.formServiceName.serviceName.$valid;
       valid.description = $scope.formServiceDescription.serviceDescription.$valid;
-      valid.billing_type = $scope.formServiceBillingType.serviceBillingType.$valid;
+      //valid.billing_type = $scope.formServiceBillingType.serviceBillingType.$valid;
       valid.cost = $scope.formServiceCost.serviceCost.$valid;
 
-      if(valid.name && valid.description && valid.billing_type && valid.cost) {
+      //if(valid.name && valid.description && valid.billing_type && valid.cost) {
+      if(valid.name && valid.description && valid.cost) {
         inputValid = true;
       }
 
       return inputValid;
     };
-      
 }]);

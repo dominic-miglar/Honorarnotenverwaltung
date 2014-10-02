@@ -23,15 +23,13 @@ customerCtrl.controller('CustomerCtrl', ['$rootScope', '$scope', '$location', '$
       );
     };
       
-      $scope.deleteCustomer = function(customer) {
-        promise = Api.deleteCustomer(customer);
-        promise.then(
-        function(result) {
-          //$scope.updateView();
-            $location.path('customers');
-        }
-      );  
-      };
+    $scope.deleteCustomer = function(customer) {
+      promise = Api.deleteCustomer(customer);
+      promise.then(
+      function(result) {
+        $location.path('customers');
+      });  
+    };
 
     $scope.verifyEditInput = function() {
       // initial value
@@ -51,8 +49,4 @@ customerCtrl.controller('CustomerCtrl', ['$rootScope', '$scope', '$location', '$
 
       return inputValid;
     };
-
-    
-
-  }
-]);  
+}]);  

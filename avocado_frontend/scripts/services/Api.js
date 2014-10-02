@@ -11,32 +11,28 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
       };
       return $http.post(configuration.apiAuthUrl, user_data);
     },
+    getResource: function(resourceLink) {
+      return $http.get(resourceLink);
+    },
+
+    /* Customers */
     getCustomers: function () {
       return $http.get(configuration.apiUrl + 'customers/');
     },
     getCustomer: function(customerId) {
       return $http.get(configuration.apiUrl + 'customers/' + customerId + '/');
     },
-    getAddresses: function () {
-      return $http.get(configuration.apiUrl + 'addresses/');
-    },
-    getAddress: function(addressId) {
-      return $http.get(configuration.apiUrl + 'addresses/' + addressId + '/');
-    },
-    getResource: function(resourceLink) {
-      return $http.get(resourceLink);
-    },
     updateCustomer: function(customer) {
       return $http.put(configuration.apiUrl + 'customers/' + customer.id + '/', customer);
-      //return $http.patch(configuration.apiUrl + 'customers/' + customer.id + '/', customer);
     },
     deleteCustomer: function(customer) {
       return $http.delete(configuration.apiUrl + 'customers/' + customer.id + '/');
-      //return $http.patch(configuration.apiUrl + 'customers/' + customer.id + '/', customer);
     },
     createNewCustomer: function(newCustomer) {
       return $http.post(configuration.apiUrl + 'customers/', newCustomer);
     },
+
+    /* Services */
     getServices: function() {
       return $http.get(configuration.apiUrl + 'services/');
     },
@@ -44,10 +40,13 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
       return $http.post(configuration.apiUrl + 'services/', newService);
     },
     getService: function(serviceId) {
-         return $http.get(configuration.apiUrl + 'services/' + serviceId + '/');
+      return $http.get(configuration.apiUrl + 'services/' + serviceId + '/');
     },
     deleteService: function(service) {
-         return $http.delete(configuration.apiUrl + 'services/' + service.id + '/');
-    }
+      return $http.delete(configuration.apiUrl + 'services/' + service.id + '/');
+    },
+    updateService: function(service) {
+      return $http.put(configuration.apiUrl + 'services/' + service.id + '/', service);
+    },
   };
 });
