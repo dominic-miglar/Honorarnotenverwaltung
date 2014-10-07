@@ -100,7 +100,12 @@
                       {{ service.description }}
                     </td>
                     <td>
-                      {{ service.billing_type }}
+                      <span ng-show="service.billing_type == 'HR'">
+                        Stundensatz
+                      </span>
+                      <span ng-show="service.billing_type == 'FR'">
+                        Pauschalpreis
+                      </span>
                     </td>
                     <td>
                       {{ service.cost }}&nbsp;&euro;

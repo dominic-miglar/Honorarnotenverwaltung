@@ -12,6 +12,22 @@ servicesCtrl.controller('ServiceCtrl', ['$rootScope', '$scope', '$location', '$r
 
     $scope.updateView();
 
+    $scope.radioButtonGroupOptions = {
+      options: [
+        {
+          id: 'HR',
+          name: 'Stundensatz'
+        },
+        {
+          id: 'FR',
+          name: 'Pauschalpreis'
+        }
+      ],
+      idProperty: 'id',
+      nameProperty: 'name',
+      bootstrapSuffix: 'default',
+    };
+
     // Update the service
     $scope.updateService = function(service) {
       promise = Api.updateService(service);

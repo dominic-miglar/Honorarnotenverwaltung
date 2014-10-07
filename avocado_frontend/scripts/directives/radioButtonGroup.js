@@ -33,4 +33,3 @@ radioButtonGroup.directive('radioButtonGroup', function() {
 		"{{getName(option)}} " + "</button>",
 	};
 });
-

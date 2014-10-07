@@ -92,10 +92,15 @@
                       <span class="pull-right">Verrechnungstyp</span>
                     </td>
                     <td ng-show="editEnabled == false">
-                      {{ service.billing_type }}
+                      <span ng-show="service.billing_type == 'HR'">
+                        Stundensatz
+                      </span>
+                      <span ng-show="service.billing_type == 'FR'">
+                        Pauschalpreis
+                      </span>
                     </td>
                     <td ng-show="editEnabled != false">
-                      {{ service.billing_type }}
+                      <radio-button-group class="btn-group" data-toggle="buttons-radio" model="service.billing_type" options="radioButtonGroupOptions.options" id="radioButtonGroupOptions.idProperty" name="radioButtonGroupOptions.nameProperty" suffix="radioButtonGroupOptions.bootstrapSuffix"></radio-button-group>
                     </td>
                   </tr>
                   <tr>
