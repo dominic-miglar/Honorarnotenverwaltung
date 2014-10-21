@@ -48,5 +48,10 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
     updateService: function(service) {
       return $http.put(configuration.apiUrl + 'services/' + service.id + '/', service);
     },
+
+    /* Consumed Services */
+    getConsumedServices: function() {
+      return $http.get(configuration.apiUrl + 'consumedservices/');
+    },
   };
 });

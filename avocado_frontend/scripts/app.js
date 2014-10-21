@@ -10,6 +10,7 @@ var avocadoApp = angular.module('avocadoApp', [
     'customerCtrl',
     'servicesCtrl',
     'serviceCtrl',
+    'consumedServicesCtrl',
     'avocadoApi',
     'loginCtrl',
     'radioButtonGroup',
@@ -42,6 +43,11 @@ avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
             title: 'Service - Detail',
             templateUrl: 'views/service.html',
             controller: 'ServiceCtrl'
+        }).
+        when('/consumedservices/', {
+            title: 'Consumed Services',
+            templateUrl: 'views/consumedservices.html',
+            controller: 'ConsumedServicesCtrl'
         }).
         when('/settings/', {
             title: 'Einstellungen',

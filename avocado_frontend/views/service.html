@@ -108,11 +108,11 @@
                       <span class="pull-right">Preis</span>
                     </td>
                     <td ng-show="editEnabled == false">
-                      {{ service.cost }}
+                      {{ service.cost }} &nbsp;&euro;
                     </td>
                     <td ng-show="editEnabled != false">
                       <form name="formServiceCost" class="form-inline" role="form">
-                        <input type="text" class="form-control input-sm" name="serviceCost" ng-model="service.cost" required />
+                        <input type="text" class="form-control input-sm" name="serviceCost" ng-model="service.cost" required /> &nbsp;&euro;
                         <span class="text-danger" ng-show="formServiceCost.serviceCost.$valid == false">Dieses Feld ist erforderlich</span>
                       </form>
                     </td>
