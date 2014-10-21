@@ -15,7 +15,7 @@
           </h1>
           <!-- ############################################################################### -->
           <form class="navbar-form">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addConsumedServiceModal">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#consumeServiceModal">
               <i class="fa fa-plus"></i> Neuen Dienst konsumieren
               </button>
               <div class="input-group pull-right">
@@ -134,5 +134,95 @@
   <!-- /#page-wrapper -->
 </div>
 <!-- /#wrapper -->
+
+<!--Consume Service Modal -->
+<div class="modal fade" id="consumeServiceModal" tabindex="-1" role="dialog" aria-labelledby="consumeServiceModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Konsumierte Dienstleistung hinzuf&uuml;gen</h4>
+      </div>
+      <div class="modal-body">
+        <form name="formNewConsumedService" class="form-horizontal" role="form">
+          <!-- Dienstleistung -->
+          <div class="form-group">
+            <label for="service" class="col-sm-3 control-label">
+              Dienstleistung
+            </label>
+            <div class="col-sm-9">
+              <select class="form-control" name="service" id="service" ng-model="newConsumedService.service" ng-options="service.name for service in services" required>
+  </select>
+              <span class="text-danger" ng-show="formNewConsumedService.service.$valid == false">Dieses Feld ist erforderlich</span>
+            </div>
+          </div>
+          <!-- Kunde -->
+          <div class="form-group">
+            <label for="customer" class="col-sm-3 control-label">
+              Kunde
+            </label>
+            <div class="col-sm-9">
+              <select class="form-control" name="customer" id="customer" ng-model="newConsumedService.customer" ng-options="customer.last_name + ' ' + customer.first_name for customer in customers" required>
+  </select>
+              <span class="text-danger" ng-show="formNewConsumedService.customer.$valid == false">Dieses Feld ist erforderlich</span>
+            </div>
+          </div>
+          <hr />
+          <!-- Konsumierte Stunden -->
+          <div class="form-group" ng-show="newConsumedService.service.billing_type == 'HR'">
+            <label for="billing_type" class="col-sm-3 control-label">
+              Konsumierte Stunden
+            </label>
+            <div class="col-sm-9">
+               <input type="text" class="form-control input-sm" name="consumed" id="consumed" placeholder="Bitte geben Sie die Anzahl der zu verrechnenden Stunden ein" ng-model="newConsumedService.consumed" required />
+              <span class="text-danger" ng-show="formNewConsumedService.consumedHours.$valid == false">Dieses Feld ist erforderlich</span>
+            </div>
+          </div>
+          <!-- Rechnung -->
+          <div class="form-group">
+            <label for="invoice" class="col-sm-3 control-label">
+              Rechnung
+            </label>
+            <div class="col-sm-9">
+               <select class="form-control" name="invoice" id="invoice" ng-model="newConsumedService.invoice" ng-options="invoice.id + ' ' + invoice.exhibition_date for invoice in invoices">
+  </select>
+            </div>
+          </div>
+          <!-- Datum-->
+          <div class="form-group">
+            <label for="date" class="col-sm-3 control-label">
+              Datum
+            </label>
+            <div class="col-sm-9">
+              <input type="date" class="form-control input-sm" name="date" id="date" ng-model="newConsumedService.date" required />
+              <span class="text-danger" ng-show="formNewConsumedService.date.$valid == false">Dieses Feld ist erforderlich</span>
+            </div>
+          </div>
+          <!-- Uhrzeit -->
+          <div class="form-group">
+            <label for="time" class="col-sm-3 control-label">
+              Uhrzeit
+            </label>
+            <div class="col-sm-9">
+              <input type="time" class="form-control input-sm" name="time" id="time" ng-model="newConsumedService.time" required />
+              <span class="text-danger" ng-show="formNewConsumedService.time.$valid == false">Dieses Feld ist erforderlich</span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+        Schließen
+        </button>
+        <button ng-show="verifyNewConsumedServiceInput() == true" type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="createNewConsumedService(newConsumedService)">
+        Hinzuf&uuml;gen
+        </button>
+        <button ng-hide="verifyNewConsumedServiceInput() == true" type="submit" class="btn btn-disabled" data-dismiss="modal" disabled="disabled">
+        Hinzuf&uuml;gen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
 

@@ -34,7 +34,7 @@ servicesCtrl.controller('ServicesCtrl', ['$rootScope', '$scope', '$location', 'A
     $scope.verifyNewServiceInput = function() {
       // initial value
       inputValid = false;
-      valid = []
+      valid = [];
 
       valid.name = $scope.formNewService.name.$valid;
       valid.description = $scope.formNewService.description.$valid;

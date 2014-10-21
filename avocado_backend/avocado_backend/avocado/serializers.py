@@ -26,6 +26,16 @@ class BankAccountSerializer(serializers.ModelSerializer):
         fields = ('id', 'iban', 'bic',)
         read_only_fields = []
 
+# Serializer for Customer 
+
+class CustomerSerializer(serializers.ModelSerializer):
+    bank_account = BankAccountSerializer(required=False)
+    address = AddressSerializer()
+    class Meta:
+        model = models.Customer
+        fields = ('id', 'address', 'bank_account', 'last_name', 'first_name', 'birthdate', 'email', 'telephone_number', 'mobile_phone_number', 'recommended_from', 'date_created',)
+        read_only_fields = []
+
 class InvoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Invoice
@@ -40,11 +50,12 @@ class ServiceSerializer(serializers.ModelSerializer):
 
 # Serializers for Consumed Services view
 
+'''
 class ConsumedServiceServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Service
-        fields = ('id', 'name', 'billing_type',)
-        read_only_fields = ['id', 'name', 'billing_type',]
+        fields = ('id', 'name', 'billing_type', 'cost',)
+        read_only_fields = ['id', 'name', 'billing_type', 'cost',]
 
 class ConsumedServiceCustomerSerializer(serializers.ModelSerializer):
     class Meta:
@@ -57,22 +68,12 @@ class ConsumedServiceInvoiceSerializer(serializers.ModelSerializer):
         model = models.Invoice
         fields = ('id', 'exhibition_date',)
         read_only_fields = ['id', 'exhibition_date',]
+'''
 
 class ConsumedServiceSerializer(serializers.ModelSerializer):
-    customer = ConsumedServiceCustomerSerializer()
-    service = ConsumedServiceServiceSerializer()
-    invoice = ConsumedServiceInvoiceSerializer(required=False)
     class Meta:
         model = models.ConsumedService
-        fields = ('id', 'customer', 'service', 'invoice', 'consumed', 'date_consumed')
+        fields = ('id', 'consumed', 'date_consumed', 'customer', 'service', 'invoice')
         read_only_fields = []
 
-# Serializer for Customer 
 
-class CustomerSerializer(serializers.ModelSerializer):
-    bank_account = BankAccountSerializer(required=False)
-    address = AddressSerializer()
-    class Meta:
-        model = models.Customer
-        fields = ('id', 'address', 'bank_account', 'last_name', 'first_name', 'birthdate', 'email', 'telephone_number', 'mobile_phone_number', 'recommended_from', 'date_created',)
-        read_only_fields = []

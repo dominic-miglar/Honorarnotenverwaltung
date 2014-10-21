@@ -142,7 +142,7 @@ class ConsumedService(models.Model):
     customer = models.ForeignKey('Customer')    
     invoice = models.ForeignKey('Invoice', null=True, blank=True)
     consumed = models.FloatField('Hours consumed', null=True, blank=True)
-    date_consumed = models.DateTimeField('Date consumed', auto_now_add=True)
+    date_consumed = models.DateTimeField('Date consumed')
 
     def save(self, *args, **kwargs):
         if(self.service.billing_type == self.service.FLAT_RATE_BILLING or not self.consumed):
