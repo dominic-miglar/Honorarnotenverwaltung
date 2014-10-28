@@ -61,6 +61,12 @@
       <li ng-show="$root.navActive != 'consumedservices'">
         <a href="./#consumedservices"><i class="fa fa-fw fa-check-circle-o"></i> Konsumierte Dienstleistungen</a>
       </li>
+      <li class="active" ng-show="$root.navActive === 'invoices'">
+        <a href="./#invoices"><i class="fa fa-fw fa-check-circle-o"></i> Rechnungen</a>
+      </li>
+      <li ng-show="$root.navActive != 'invoices'">
+        <a href="./#invoices"><i class="fa fa-fw fa-check-circle-o"></i> Rechnungen</a>
+      </li>
       <li class="active" ng-show="$root.navActive == 'settings'">
         <a href="./#settings"><i class="fa fa-fw fa-cog"></i> Einstellungen</a>  
       </li>

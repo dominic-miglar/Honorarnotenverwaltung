@@ -52,7 +52,6 @@ consumedServicesCtrl.controller('ConsumedServicesCtrl', ['$rootScope', '$scope',
                     $scope.consumedServices[i].customer = $.grep($scope.customers, function(e){ return e.id == $scope.consumedServices[i].customer; })[0];
                     // TODO get Invoices
                   }
-                  console.log($scope.consumedServices);
                 });
             
 

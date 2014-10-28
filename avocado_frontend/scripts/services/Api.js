@@ -56,5 +56,20 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
     createNewConsumedService: function(newConsumedService) {
       return $http.post(configuration.apiUrl + 'consumedservices/', newConsumedService);
     },
+
+    /* Invoices */
+    getInvoices: function() {
+       return $http.get(configuration.apiUrl + 'invoices/');
+    },
+    getInvoice: function(invoiceId) {
+      return $http.get(configuration.apiUrl + 'invoices/' + invoiceId + '/');
+    },
+    deleteInvoice: function(invoice) {
+      return $http.delete(configuration.apiUrl + 'invoices/' + invoice.id + '/');
+    },
+    updateInvoice: function(invoice) {
+      return $http.put(configuration.apiUrl + 'invoices/' + invoice.id + '/', invoice);
+    },
+    
   };
 });

@@ -11,6 +11,8 @@ var avocadoApp = angular.module('avocadoApp', [
     'servicesCtrl',
     'serviceCtrl',
     'consumedServicesCtrl',
+    'invoicesCtrl',
+    'InvoiceCtrl',
     'avocadoApi',
     'loginCtrl',
     'radioButtonGroup',
@@ -48,6 +50,16 @@ avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
             title: 'Consumed Services',
             templateUrl: 'views/consumedservices.html',
             controller: 'ConsumedServicesCtrl'
+        }).
+        when('/invoices/', {
+            title: 'Rechnungen',
+            templateUrl: 'views/invoices.html',
+            controller: 'InvoicesCtrl'
+        }).
+        when('/invoices/:invoiceId', {
+            title: 'Rechnung',
+            templateUrl: 'views/invoice.html',
+            controller: 'InvoiceCtrl'
         }).
         when('/settings/', {
             title: 'Einstellungen',
