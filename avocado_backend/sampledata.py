@@ -163,7 +163,6 @@ def create_sample_user_data():
 	invoice_herbert = Invoice()
 	invoice_herbert.issuer = userprofile_mongo
 	invoice_herbert.customer = customer_herbert
-	#invoice_herbert.vat_type = Invoice.VAT_EXEMPT
 	invoice_herbert.save()
 
 	# Consume Services and link it to the just created Invoice

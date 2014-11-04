@@ -15,6 +15,7 @@ class CustomerFilter(django_filters.FilterSet):
         fields = [
             'id', 'address', 'bank_account', 'last_name', 'first_name', 'email', 
             'telephone_number', 'mobile_phone_number', 'recommended_from', 'date_created',
+            'is_vat_exempt',
         ]
 
 class AddressFilter(django_filters.FilterSet):

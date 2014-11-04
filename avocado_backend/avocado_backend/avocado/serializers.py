@@ -33,7 +33,7 @@ class CustomerSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
     class Meta:
         model = models.Customer
-        fields = ('id', 'address', 'bank_account', 'last_name', 'first_name', 'birthdate', 'email', 'telephone_number', 'mobile_phone_number', 'recommended_from', 'date_created',)
+        fields = ('id', 'address', 'bank_account', 'last_name', 'first_name', 'birthdate', 'email', 'telephone_number', 'mobile_phone_number', 'recommended_from', 'date_created', 'is_vat_exempt',)
         read_only_fields = []
 
 class InvoiceSerializer(serializers.ModelSerializer):

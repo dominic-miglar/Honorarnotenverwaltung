@@ -30,6 +30,7 @@ class Customer(models.Model):
     mobile_phone_number = models.CharField('Mobile Phone Number', max_length=255, null=True, blank=True)
     recommended_from = models.CharField('Recommended from', max_length=255, null=True, blank=True)
     date_created = models.DateTimeField('Creation Date', auto_now_add=True)
+    is_vat_exempt = models.BooleanField('Is VAT Exempt', default=False)
 
     def __str__(self):
         retval = '{0} {1}'.format(self.last_name.upper(), self.first_name)
