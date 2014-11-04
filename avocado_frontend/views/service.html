@@ -105,6 +105,25 @@
                   </tr>
                   <tr>
                     <td class="active">
+                      <span class="pull-right">Umsatzsteuertyp</span>
+                    </td>
+                    <td ng-show="editEnabled == false">
+                      <span ng-show="service.vat_type == 'STVAT'">
+                        verpflichtet
+                      </span>
+                      <span ng-show="service.vat_type == 'VATEX'">
+                        befreit
+                      </span>
+                      <span ng-show="service.vat_type == 'PVATE'">
+                        unecht befreit
+                      </span>
+                    </td>
+                    <td ng-show="editEnabled != false">
+                      <radio-button-group class="btn-group" data-toggle="buttons-radio" model="service.vat_type" options="VATOptions.options" id="VATOptions.idProperty" name="VATOptions.nameProperty" suffix="VATOptions.bootstrapSuffix"></radio-button-group>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="active">
                       <span class="pull-right">Preis</span>
                     </td>
                     <td ng-show="editEnabled == false">

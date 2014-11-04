@@ -28,8 +28,31 @@ servicesCtrl.controller('ServicesCtrl', ['$rootScope', '$scope', '$location', 'A
       bootstrapSuffix: 'default',
     };
 
+    $scope.VATOptions = {
+      options: [
+        {
+          id: 'STVAT',
+          name: 'verpflichtet'
+        },
+        {
+          id: 'VATEX',
+          name: 'befreit'
+        },
+        {
+          id: 'PVATE',
+          name: 'unecht befreit'
+        }
+      ],
+      idProperty: 'id',
+      nameProperty: 'name',
+      bootstrapSuffix: 'default',
+    };
+
+    
+
     $scope.newService = {};
     $scope.newService.billing_type = 'HR';
+    $scope.newService.vat_type = 'STVAT';
 
     $scope.verifyNewServiceInput = function() {
       // initial value

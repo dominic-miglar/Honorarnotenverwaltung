@@ -28,6 +28,26 @@ servicesCtrl.controller('ServiceCtrl', ['$rootScope', '$scope', '$location', '$r
       bootstrapSuffix: 'default',
     };
 
+    $scope.VATOptions = {
+      options: [
+        {
+          id: 'STVAT',
+          name: 'verpflichtet'
+        },
+        {
+          id: 'VATEX',
+          name: 'befreit'
+        },
+        {
+          id: 'PVATE',
+          name: 'unecht befreit'
+        }
+      ],
+      idProperty: 'id',
+      nameProperty: 'name',
+      bootstrapSuffix: 'default',
+    };
+
     // Update the service
     $scope.updateService = function(service) {
       promise = Api.updateService(service);
