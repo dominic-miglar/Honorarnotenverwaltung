@@ -56,7 +56,15 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
 
     $scope.updateView();
 
-    
+    $scope.updateInvoice = function(invoice) {
+      invoice.customer = invoice.customer.id;
+      promise = Api.updateInvoice(invoice);
+      promise.then(
+        function(result) {
+          $scope.updateView();
+        }
+      );
+    };
 
     $scope.verifyEditInput = function() {
       // initial value
