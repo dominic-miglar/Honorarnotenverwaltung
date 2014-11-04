@@ -72,6 +72,9 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
     updateInvoice: function(invoice) {
       return $http.put(configuration.apiUrl + 'invoices/' + invoice.id + '/', invoice);
     },
-    
+    createNewInvoice: function(newInvoice) {
+      return $http.post(configuration.apiUrl + 'invoices/', newInvoice);
+    },
+
   };
 });
