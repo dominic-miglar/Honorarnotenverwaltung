@@ -99,7 +99,7 @@ class Invoice(models.Model):
         'Status', max_length=5, choices=STATUS_CHOICES, default=CREATED)
 
     def __str__(self):
-        return '{0} - {1} - {2}'.format(self.id, self.exhibition_date, self.vat_type)
+        return '{0} - {1}'.format(self.id, self.exhibition_date)
 
     class Meta:
         verbose_name = 'Invoice'

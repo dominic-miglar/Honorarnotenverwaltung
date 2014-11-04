@@ -152,7 +152,7 @@
             </label>
             <div class="col-sm-9">
               <select class="form-control" name="service" id="service" ng-model="newConsumedService.service" ng-options="service.name for service in services" required>
-  </select>
+              </select>
               <span class="text-danger" ng-show="formNewConsumedService.service.$valid == false">Dieses Feld ist erforderlich</span>
             </div>
           </div>
@@ -163,7 +163,7 @@
             </label>
             <div class="col-sm-9">
               <select class="form-control" name="customer" id="customer" ng-model="newConsumedService.customer" ng-options="customer.last_name + ' ' + customer.first_name for customer in customers" required>
-  </select>
+              </select>
               <span class="text-danger" ng-show="formNewConsumedService.customer.$valid == false">Dieses Feld ist erforderlich</span>
             </div>
           </div>
@@ -185,7 +185,7 @@
             </label>
             <div class="col-sm-9">
                <select class="form-control" name="invoice" id="invoice" ng-model="newConsumedService.invoice" ng-options="invoice.id + ' ' + invoice.exhibition_date for invoice in invoices">
-  </select>
+              </select>
             </div>
           </div>
           <!-- Datum-->
