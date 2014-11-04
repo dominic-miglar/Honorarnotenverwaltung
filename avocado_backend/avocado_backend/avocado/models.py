@@ -82,20 +82,8 @@ class BankAccount(models.Model):
 class Invoice(models.Model):
     issuer = models.ForeignKey('UserProfile')
     customer = models.ForeignKey('Customer')
-    #services = models.OneToMany('ConsumedService')
     exhibition_date = models.DateTimeField('Exhibition Date', auto_now_add=True)
     delivery_date = models.DateTimeField('Delivery Date', auto_now_add=True)
-    SUBJECT_TO_VAT = 'STVAT'
-    VAT_EXEMPT = 'VATEX'
-    PHONY_VAT_EXEMPT = 'PVATE'
-    VAT_CHOICES = (
-        (SUBJECT_TO_VAT, 'Subject to VAT'),     # Umsatzsteuerpflichtig
-        (VAT_EXEMPT, 'VAT exempt'),             # Umsatzsteuerbefreit
-        (PHONY_VAT_EXEMPT, 'Phony VAT exempt'), # Unecht Umsatzsteuerbefreit
-    )
-    vat_type = models.CharField(
-        'VAT Type', max_length=5, choices=VAT_CHOICES, default=SUBJECT_TO_VAT)
-
     OPEN = 'OPN'
     CREATED = 'CRE'
     CANCELED = 'CAN'
@@ -128,6 +116,17 @@ class Service(models.Model):
     )
     billing_type = models.CharField('Billing Type', max_length=2, choices=BILLING_TYPE_CHOICES, default=HOURLY_RATE_BILLING)
     cost = models.FloatField('Cost')
+
+    SUBJECT_TO_VAT = 'STVAT'
+    VAT_EXEMPT = 'VATEX'
+    PHONY_VAT_EXEMPT = 'PVATE'
+    VAT_CHOICES = (
+        (SUBJECT_TO_VAT, 'Subject to VAT'),     # Umsatzsteuerpflichtig
+        (VAT_EXEMPT, 'VAT exempt'),             # Umsatzsteuerbefreit
+        (PHONY_VAT_EXEMPT, 'Phony VAT exempt'), # Unecht Umsatzsteuerbefreit
+    )
+    vat_type = models.CharField(
+        'VAT Type', max_length=5, choices=VAT_CHOICES, default=SUBJECT_TO_VAT)
 
     def __str__(self):
         return '{0} - {1} {2}'.format(self.name, str(self.cost), self.billing_type)

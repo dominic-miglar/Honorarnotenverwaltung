@@ -39,13 +39,13 @@ class CustomerSerializer(serializers.ModelSerializer):
 class InvoiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Invoice
-        fields = ('id', 'issuer', 'customer', 'exhibition_date', 'delivery_date', 'vat_type', 'status',)
+        fields = ('id', 'issuer', 'customer', 'exhibition_date', 'delivery_date', 'status',)
         read_only_fields = []
 
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Service
-        fields = ('id', 'name', 'description', 'billing_type', 'cost',)
+        fields = ('id', 'name', 'description', 'billing_type', 'cost', 'vat_type',)
         read_only_fields = []
 
 # Serializers for Consumed Services view
