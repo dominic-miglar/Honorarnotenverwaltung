@@ -159,13 +159,18 @@
                                                             {{ consumedService.service.name }}
                                                         </td>
                                                         <td>
-                                                          {{ consumedService.consumed }}
+                                                            <span ng-show="consumedService.service.billing_type == 'HR'">
+                                                          {{ consumedService.consumed }}h &aacute; {{ consumedService.service.cost }} &euro;</span>
+
+                                                           <span ng-show="consumedService.service.billing_type == 'FR'">
+                                                           Fixed rate
+                                                           </span>
                                                         </td>
                                                         <td>
                                                           {{ consumedService.date_consumed }}
                                                         </td>
                                                         <td>
-                                                            TODO
+                                                        {{ consumedService.consumed * consumedService.service.cost }}
                                                         </td>
                                                     </tr>
                                                 </tbody>

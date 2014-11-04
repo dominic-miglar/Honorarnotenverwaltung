@@ -41,6 +41,17 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
       Api.getCustomers().then(function (response) {
         $scope.customers = response.data;
       });
+
+      Api.getConsumedServicesForInvoice($scope.invoiceId).then(function (response) {
+        $scope.consumedServices = response.data;
+
+        Api.getServices().then(function(response2) {
+
+          for(var i = 0; i<$scope.consumedServices.length; i++) {
+              $scope.consumedServices[i].service = $.grep(response2.data, function(e){ return e.id == $scope.consumedServices[i].service; })[0];
+            }
+        });
+      });
     };
 
     $scope.updateView();

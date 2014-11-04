@@ -56,7 +56,9 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
     createNewConsumedService: function(newConsumedService) {
       return $http.post(configuration.apiUrl + 'consumedservices/', newConsumedService);
     },
-
+    getConsumedServicesForInvoice: function(invoiceID) {
+      return $http.get(configuration.apiUrl + 'consumedservices/?invoice=' + invoiceID);
+    },
     /* Invoices */
     getInvoices: function() {
        return $http.get(configuration.apiUrl + 'invoices/');
