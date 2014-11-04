@@ -231,6 +231,20 @@
                                             </form>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="active">
+                                            <span class="pull-right">USt-befreit</span>
+                                        </td>
+                                        <td ng-show="editEnabled == false">
+                                            <span ng-show="customer.is_vat_exempt == true">Ja</span>
+                                            <span ng-show="customer.is_vat_exempt == false">Nein</span>
+                                        </td>
+                                        <td ng-show="editEnabled != false">
+                                            <form class="form-inline" role="form">
+                                                <input type="checkbox" class="input-sm" name="is_vat_exempt" ng-model="customer.is_vat_exempt" />
+                                            </form>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
