@@ -25,8 +25,6 @@ mainCtrl.controller('UserProfileCtrl', ['$rootScope', '$scope', '$location', 'Ap
       );	
     };
 
-
-
     $scope.verifyEditInput = function() {
       // initial value
       inputValid = false;
@@ -46,4 +44,4 @@ mainCtrl.controller('UserProfileCtrl', ['$rootScope', '$scope', '$location', 'Ap
       return inputValid;
     };
 
-    }]);
+}]);
