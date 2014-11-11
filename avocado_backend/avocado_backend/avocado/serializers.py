@@ -8,12 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         #model = User
 
-class UserProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.UserProfile
-        fields = ('id', 'user', 'address', 'bank_account', 'uid', 'last_name', 'first_name', 'telephone_number', 'mobile_phone_number')
-        read_only_fields = []
-
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Address
@@ -24,6 +18,14 @@ class BankAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.BankAccount
         fields = ('id', 'iban', 'bic',)
+        read_only_fields = []
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    bank_account = BankAccountSerializer(required=False)
+    address = AddressSerializer()
+    class Meta:
+        model = models.UserProfile
+        fields = ('id', 'user', 'address', 'bank_account', 'uid', 'last_name', 'first_name', 'telephone_number', 'mobile_phone_number')
         read_only_fields = []
 
 # Serializer for Customer 

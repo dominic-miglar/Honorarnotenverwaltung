@@ -15,7 +15,7 @@
     <li ng-show="isLoggedIn">
       <div data-ng-controller="LoginCtrl" class="panel-usercontrol">
         <form class="navbar-form navbar-right" ng-show="isLoggedIn">
-        <i class="fa fa-user"></i> {{ username }} &nbsp;
+        <i class="fa fa-user"></i> <a href="./#userprofile">{{ username }}</a> &nbsp;
         <button class="btn btn-danger" ng-click="logout()">Abmelden</button>
         </form>
       </div>

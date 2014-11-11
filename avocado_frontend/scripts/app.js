@@ -16,6 +16,7 @@ var avocadoApp = angular.module('avocadoApp', [
     'avocadoApi',
     'loginCtrl',
     'radioButtonGroup',
+    'UserProfileCtrl',
     ]);
 
 avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
@@ -65,6 +66,11 @@ avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
             title: 'Einstellungen',
             templateUrl: 'views/settings.html',
             controller: 'SettingsCtrl'
+        }).
+        when('/userprofile/', {
+            title: 'User Profil',
+            templateUrl: 'views/userprofile.html',
+            controller: 'UserProfileCtrl'
         }).
         otherwise({
             redirectTo: '/'

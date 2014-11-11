@@ -1,6 +1,9 @@
 from rest_framework import viewsets
+from rest_framework import serializers as rest_framework_serializers
 from django.contrib.auth.models import User
 from avocado_backend.avocado import models, filtersets, serializers
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 class UserViewSet(viewsets.ModelViewSet):
 	queryset = User.objects.all()
@@ -40,3 +43,8 @@ class ConsumedServiceViewSet(viewsets.ModelViewSet):
 	queryset = models.ConsumedService.objects.all()
 	serializer_class = serializers.ConsumedServiceSerializer
 	filter_class = filtersets.ConsumedServiceFilter
+
+class CurrentUserView(APIView):
+	def get(self,request):
+		serializer = serializers.UserSerializer(request.user)
+		return Response(serializer.data)

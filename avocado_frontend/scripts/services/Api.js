@@ -11,10 +11,15 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
       };
       return $http.post(configuration.apiAuthUrl, user_data);
     },
+    getCurrentUser: function () {
+      return $http.get(configuration.apiUrl + 'currentuser/');
+    },
+    getUserProfile: function(userID) {
+       return $http.get(configuration.apiUrl + 'userprofiles/?user=' + userID);
+    },
     getResource: function(resourceLink) {
       return $http.get(resourceLink);
     },
-
     /* Customers */
     getCustomers: function () {
       return $http.get(configuration.apiUrl + 'customers/');
