@@ -63,6 +63,7 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
               // END DEBUG //
           }
           $scope.grossAmount = $scope.calculateOverallGrossAmount();
+          $scope.netAmount = $scope.calculateOverallNetAmount();
         });
       });
     };
@@ -127,6 +128,17 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
         gross = net;
       }
       return gross;
+    };
+
+    $scope.calculateOverallNetAmount = function() {
+      var netAmount = 0;
+      for(var i = 0; i<$scope.consumedServices.length; i++) {
+        var cost = $scope.consumedServices[i].service.cost;
+        var consumed = $scope.consumedServices[i].consumed;
+        var net = cost*consumed;
+        netAmount += net;
+      }
+      return netAmount;
     };
 
 }]);  
