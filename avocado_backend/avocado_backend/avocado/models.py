@@ -10,6 +10,8 @@ class UserProfile(models.Model):
     first_name = models.CharField('First Name', max_length=255)
     telephone_number = models.CharField('Telephone Number', max_length=255, null=True, blank=True)
     mobile_phone_number = models.CharField('Mobile Phone Number', max_length=255, null=True, blank=True)
+    email = models.CharField('E-Mail Address', max_length=75, null=True, blank=True)
+    birthdate = models.DateTimeField('Birthdate', null=True, blank=True)
 
     def __str__(self):
         return '{0} {1}'.format(self.last_name.upper(), self.first_name)

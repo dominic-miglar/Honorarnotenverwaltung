@@ -84,7 +84,8 @@ def create_sample_user_data():
 		last_name='Hugo',
 		first_name='Oguh',
 		telephone_number='+436601234567',
-                mobile_phone_number='+436605498711'
+        mobile_phone_number='+436605498711',
+        email='hugo@hugo.com'
 	)
 	userprofile_mongo = UserProfile.objects.create(
 		user=user_mongo,
@@ -93,7 +94,8 @@ def create_sample_user_data():
 		uid='UID223382',
 		last_name='Mongo',
 		first_name='Ognom',
-		telephone_number='+436607654321'
+		telephone_number='+436607654321',
+		email='mongo@mongo.com'
 	)
 	userprofile_goofy = UserProfile.objects.create(
 		user=user_goofy,
@@ -102,7 +104,8 @@ def create_sample_user_data():
 		uid='UID229381',
 		last_name='Goofy',
 		first_name='Yfoog',
-		telephone_number='+436601229667'
+		telephone_number='+436601229667',
+		email='goofy@goofy.com'
 	)
 
 	# Create Sample Customers

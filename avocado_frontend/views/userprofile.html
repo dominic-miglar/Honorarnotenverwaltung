@@ -117,7 +117,7 @@
                                         </td>
                                         <td ng-show="editEnabled != false">
                                             <form name="formCustomerAddressStreetAddress" class="form-inline" role="form">
-                                                <input type="text" class="form-control input-sm" name="customerAddressStreetAddress" ng-model="customer.address.street_address" required />
+                                                <input type="text" class="form-control input-sm" name="customerAddressStreetAddress" ng-model="user_profile.address.street_address" required />
                                                 <span class="text-danger" ng-show="formCustomerAddressStreetAddress.customerAddressStreetAddress.$valid == false">Dieses Feld ist erforderlich</span>
                                             </form>
                                         </td>
@@ -143,7 +143,7 @@
                                         </td>
                                         <td ng-show="editEnabled != false">
                                             <form class="form-inline" role="form">
-                                                <input type="text" class="form-control input-sm" name="customerTelephoneNumber" ng-model="customer.telephone_number" />
+                                                <input type="text" class="form-control input-sm" name="customerTelephoneNumber" ng-model="user_profile.telephone_number" />
                                             </form>
                                         </td>
                                     </tr>
@@ -157,7 +157,7 @@
                                         </td>
                                         <td ng-show="editEnabled != false">
                                             <form class="form-inline" role="form">
-                                                <input type="text" class="form-control input-sm" name="customerMobilePhoneNumber" ng-model="customer.mobile_phone_number" />
+                                                <input type="text" class="form-control input-sm" name="customerMobilePhoneNumber" ng-model="user_profile.mobile_phone_number" />
                                             </form>
                                         </td>
                                     </tr>
@@ -173,7 +173,7 @@
                                         </td>
                                         <td ng-show="editEnabled != false">
                                             <form class="form-inline" role="form">
-                                                <input type="email" class="form-control input-sm" name="customerEmail" ng-model="customer.email" />
+                                                <input type="email" class="form-control input-sm" name="customerEmail" ng-model="user_profile.email" />
                                             </form>
                                         </td>
                                     </tr>
@@ -187,7 +187,7 @@
                                         </td>
                                         <td ng-show="editEnabled != false">
                                             <form class="form-inline" role="form">
-                                                <input type="date" class="form-control input-sm" name="customerBirthdate" ng-model="customer.birthdate" />
+                                                <input type="date" class="form-control input-sm" name="customerBirthdate" ng-model="user_profile.birthdate" />
                                             </form>
                                         </td>
                                     </tr>
@@ -225,43 +225,6 @@
                                         <td ng-show="editEnabled != false">
                                             <form class="form-inline" role="form">
                                                 <input type="text" class="form-control input-sm" name="customerBankAccountBic" ng-model="user_profile.bank_account.bic" />
-                                            </form>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!--<h3>Sonstige Informationen</h3>-->
-                        <div class="table-responsive">
-                            <table class="table table-hover table-condensed">
-                                <tbody>
-                                    <tr>
-                                        <th class="col-md-2">Sonstige Informationen</th>
-                                        <th class="col-md-10"></th>
-                                    </tr>
-                                    <tr>
-                                        <td class="active">
-                                            <span class="pull-right">Erstkontakt</span>
-                                        </td>
-                                        <td ng-show="editEnabled == false">
-                                            {{ customer.date_created | date:'yyyy-MM-dd' }}
-                                        </td>
-                                        <td ng-show="editEnabled != false">
-                                            <form class="form-inline" role="form">
-                                                <input type="date" class="form-control input-sm" name="customerDateCreated" ng-model="customer.date_created" />
-                                            </form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="active">
-                                            <span class="pull-right">Empfohlen von</span>
-                                        </td>
-                                        <td ng-show="editEnabled == false">
-                                            {{ customer.recommended_from }}
-                                        </td>
-                                        <td ng-show="editEnabled != false">
-                                            <form class="form-inline" role="form">
-                                                <input type="text" class="form-control input-sm" name="customerRecommendedFrom" ng-model="customer.recommended_from" />
                                             </form>
                                         </td>
                                     </tr>

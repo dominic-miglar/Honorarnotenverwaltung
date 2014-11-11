@@ -25,7 +25,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
     address = AddressSerializer()
     class Meta:
         model = models.UserProfile
-        fields = ('id', 'user', 'address', 'bank_account', 'uid', 'last_name', 'first_name', 'telephone_number', 'mobile_phone_number')
+        fields = ('id', 'user', 'address', 'bank_account', 'uid', 'last_name', 'first_name', 'telephone_number', 'mobile_phone_number', 'email', 'birthdate')
         read_only_fields = []
 
 # Serializer for Customer 

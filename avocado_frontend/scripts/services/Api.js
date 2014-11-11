@@ -17,6 +17,9 @@ avocadoApi.factory('Api', function ($rootScope, $http, $cookieStore, $q) {
     getUserProfile: function(userID) {
        return $http.get(configuration.apiUrl + 'userprofiles/?user=' + userID);
     },
+    updateUserProfile: function(profile) {
+      return $http.put(configuration.apiUrl + 'userprofiles/' + profile.id + '/', profile);
+    },
     getResource: function(resourceLink) {
       return $http.get(resourceLink);
     },
