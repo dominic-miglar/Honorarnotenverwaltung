@@ -50,10 +50,7 @@
                                 <tbody>
                                     <tr>
                                         <th class="col-md-2">Status</th>
-                                        <th class="col-md-10"></th>
-                                    </tr>
-                                    <tr>
-                                        <td ng-show="editEnabled == false" class="active">
+                                        <td class="col-md-10" ng-show="editEnabled == false" class="active">
                                              <span class="label label-warning" ng-show="invoice.status == 'OPN'">
                                                 Offen
                                               </span>
@@ -70,7 +67,8 @@
                                         <td ng-show="editEnabled != false" id="buttonGroupWrapper">
                                             <radio-button-group class="btn-group" data-toggle="buttons-radio" model="invoice.status" options="radioButtonGroupOptions.options" id="radioButtonGroupOptions.idProperty" name="radioButtonGroupOptions.nameProperty" suffix="radioButtonGroupOptions.bootstrapSuffix"></radio-button-group>
                                         </td>
-                                        <td></td>
+                                    </tr>
+                                    <tr>
                                     </tr>
                                 </tbody>
                             </table>
