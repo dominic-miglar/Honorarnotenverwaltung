@@ -29,6 +29,9 @@
               <button class="btn btn-default pull-right" type="button" ng-click="editEnabled = true" ng-init="editEnabled = false">
               Bearbeiten <i class="fa fa-edit"></i>
               </button>
+              <button class="btn btn-default pull-right" type="button" ng-click="generatePDF()">
+              PDF generieren
+              </button>
               </h1>
             </div>
             <div ng-show="editEnabled != false">
@@ -130,7 +133,7 @@
               <table class="table table-hover table-condensed">
                 <tbody>
                   <tr>
-                    <th class="col-md-2">Konsumierte Dienstleistungen</th>
+                    <th class="col-md-2">Konsumierte Dienstleistungen <span class="glyphicon glyphicon-plus-sign" style="cursor: pointer; color: green;" data-toggle="modal" data-target="#consumeServiceModal"></span></th>
                     <th class="col-md-10"></th>
                   </tr>
                   <tr>
@@ -224,8 +227,97 @@
                       </table>
                     </td>
                     <td class="table" ng-show="editEnabled != false">
-                      
-                      
+                      <table class="table table-hover table-condensed">
+                        <thead>
+                          <th></th>
+                          <th>
+                            Dienstleistung
+                          </th>
+                          <th>
+                            Einheiten Konsumiert
+                          </th>
+                          <th>
+                            Datum
+                          </th>
+                          <th>
+                            Kosten netto
+                          </th>
+                          <th>
+                            Steuersatz
+                          </th>
+                          <th>
+                            Kosten brutto
+                          </th>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="consumedService in consumedServices | orderBy:orderByField">
+                          <td><span class="glyphicon glyphicon-minus-sign" style="cursor: pointer; color: red;" ng-click="removeConsumedService(consumedService)"></span></td>
+                            <td>
+                              {{ consumedService.service.name }}
+                            </td>
+                            <td>
+                              <span ng-show="consumedService.service.billing_type == 'HR'">
+                              {{ consumedService.consumed }}h &aacute; &euro; {{ consumedService.service.cost | number : 2 }}</span>
+                              <span ng-show="consumedService.service.billing_type == 'FR'">
+                              Pauschalpreis
+                              </span>
+                            </td>
+                            <td>
+                              {{ consumedService.date_consumed }}
+                            </td>
+                            <td> &euro;
+                              {{ consumedService.consumed * consumedService.service.cost | number : 2 }}
+                            </td>
+                            <td>
+                              <span ng-show="invoice.customer.is_vat_exempt || consumedService.service.vat_type == 'VATEX'">
+                                USt. befreit
+                              </span>
+                              <span ng-show="consumedService.service.vat_type == 'STVAT' && !invoice.customer.is_vat_exempt">
+                                USt. pflichtig (20%)
+                              </span>
+                              <span ng-show="consumedService.service.vat_type == 'PVATE' && !invoice.customer.is_vat_exempt">
+                                Unecht USt. befreit
+                              </span>
+                            </td>
+                            <td>&euro;
+                              {{ consumedService.gross | number : 2 }}
+                            </td>
+                          </tr>
+                          <tr>
+                          <td></td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td>
+                              <strong>Summe</strong>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                             &euro; {{ netAmount | number : 2 }}
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                              &euro; {{ grossAmount | number : 2 }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>                      
                     </td>
                     <td></td>
                   </tr>
@@ -244,3 +336,73 @@
   <!-- /#page-wrapper -->
 </div>
 <!-- /#wrapper -->
+
+
+<!--Consume Service Modal -->
+<div class="modal fade" id="consumeServiceModal" tabindex="-1" role="dialog" aria-labelledby="consumeServiceModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Konsumierte Dienstleistung hinzuf&uuml;gen</h4>
+      </div>
+      <div class="modal-body">
+        <form name="formNewConsumedService" class="form-horizontal" role="form">
+          <!-- Dienstleistung -->
+          <div class="form-group">
+            <label for="service" class="col-sm-3 control-label">
+              Dienstleistung
+            </label>
+            <div class="col-sm-9">
+              <select class="form-control" name="service" id="service" ng-model="newConsumedService.service" ng-options="service.name for service in services" required>
+              </select>
+              <span class="text-danger" ng-show="formNewConsumedService.service.$valid == false">Dieses Feld ist erforderlich</span>
+            </div>
+          </div>
+          <!-- Konsumierte Stunden -->
+          <div class="form-group" ng-show="newConsumedService.service.billing_type == 'HR'">
+            <label for="billing_type" class="col-sm-3 control-label">
+              Konsumierte Stunden
+            </label>
+            <div class="col-sm-9">
+               <input type="text" class="form-control input-sm" name="consumed" id="consumed" placeholder="Bitte geben Sie die Anzahl der zu verrechnenden Stunden ein" ng-model="newConsumedService.consumed" required />
+              <span class="text-danger" ng-show="formNewConsumedService.consumedHours.$valid == false">Dieses Feld ist erforderlich</span>
+            </div>
+          </div>
+          <!-- Datum-->
+          <div class="form-group">
+            <label for="date" class="col-sm-3 control-label">
+              Datum
+            </label>
+            <div class="col-sm-9">
+              <input type="date" class="form-control input-sm" name="date" id="date" ng-model="newConsumedService.date" required />
+              <span class="text-danger" ng-show="formNewConsumedService.date.$valid == false">Dieses Feld ist erforderlich</span>
+            </div>
+          </div>
+          <!-- Uhrzeit -->
+          <div class="form-group">
+            <label for="time" class="col-sm-3 control-label">
+              Uhrzeit
+            </label>
+            <div class="col-sm-9">
+              <input type="time" class="form-control input-sm" name="time" id="time" ng-model="newConsumedService.time" required />
+              <span class="text-danger" ng-show="formNewConsumedService.time.$valid == false">Dieses Feld ist erforderlich</span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+        Schließen
+        </button>
+        <button ng-show="verifyNewConsumedServiceInput() == true" type="submit" class="btn btn-primary" data-dismiss="modal" ng-click="createNewConsumedService(newConsumedService)">
+        Hinzuf&uuml;gen
+        </button>
+        <button ng-hide="verifyNewConsumedServiceInput() == true" type="submit" class="btn btn-disabled" data-dismiss="modal" disabled="disabled">
+        Hinzuf&uuml;gen
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

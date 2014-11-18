@@ -94,7 +94,7 @@
                   <tr ng-repeat="consumedService in consumedServices | orderBy:orderByField:reverseSort | filter:consumedservicesfilter">
                     <td>{{ consumedService.id }}</td>
                     <td>
-                      <a href="#services/{{consumedService.service.id}}/">
+                      <a href="#consumedservices/{{consumedService.service.id}}/">
                         {{ consumedService.service.name }}
                       </a>
                     </td>

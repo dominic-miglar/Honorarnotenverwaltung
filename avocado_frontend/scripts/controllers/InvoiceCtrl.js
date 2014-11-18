@@ -37,6 +37,10 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
           $scope.invoice.customer = response.data;
         });
 
+        Api.getServices().then(function (resp2) {
+              $scope.services = resp2.data;
+        });
+
         Api.getUserProfile($scope.invoice.issuer).then(function(response) {
           $scope.invoice.issuer = response.data[0];
           // console.log($scope.invoice.issuer);
@@ -55,12 +59,7 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
 
           for(var i = 0; i<$scope.consumedServices.length; i++) {
               $scope.consumedServices[i].service = $.grep(response2.data, function(e){ return e.id == $scope.consumedServices[i].service; })[0];
-              // DEBUG //
-              console.log($scope.consumedServices);
-              console.log($scope.invoice.customer);
-              console.log($scope.calculateGrossAmount($scope.consumedServices[i]));
               $scope.consumedServices[i].gross = $scope.calculateGrossAmount($scope.consumedServices[i]);
-              // END DEBUG //
           }
           $scope.grossAmount = $scope.calculateOverallGrossAmount();
           $scope.netAmount = $scope.calculateOverallNetAmount();
@@ -71,6 +70,7 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
     $scope.updateView();
 
     $scope.updateInvoice = function(invoice) {
+      invoice.issuer = invoice.issuer.user;
       invoice.customer = invoice.customer.id;
       promise = Api.updateInvoice(invoice);
       promise.then(
@@ -79,6 +79,32 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
         }
       );
     };
+
+    $scope.deleteInvoice = function(invoice) {
+      for(var i = 0; i<$scope.consumedServices.length; i++) {
+          $scope.consumedServices[i].invoice = undefined;
+          $scope.consumedServices[i].service = $scope.consumedServices[i].service.id;
+          Api.updateConsumedService($scope.consumedServices[i]);
+      }
+
+      invoice.issuer = invoice.issuer.user;
+      invoice.customer = invoice.customer.id;
+      promise = Api.deleteInvoice(invoice);
+      promise.then(
+        function(result) {
+          $location.path('invoices');
+        }
+      );
+    };
+    
+    $scope.removeConsumedService = function(consumedService) {
+      consumedService.invoice = undefined;
+      consumedService.service = consumedService.service.id;
+      Api.updateConsumedService(consumedService).then(function(response) {
+        $scope.updateView();
+      });
+    };
+    
 
     $scope.verifyEditInput = function() {
       // initial value
@@ -141,4 +167,127 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
       return netAmount;
     };
 
+    $scope.createNewConsumedService = function(newConsumedService) {
+        newConsumedService.customer = $scope.invoice.customer.id;
+        newConsumedService.service = newConsumedService.service.id;
+        newConsumedService.invoice = $scope.invoice.id;
+
+        newConsumedService.date_consumed = newConsumedService.date + "T" + newConsumedService.time;
+        promise = Api.createNewConsumedService(newConsumedService);
+        promise.then(function(result) {
+          console.log('Successfully created new consumed service.');
+          $scope.updateView();
+        }, function(result) {
+          console.log('Failed to create new consumed service!');
+          $scope.updateView();
+        });
+      };
+
+
+    $scope.generatePDF = function() {
+      var dd = {
+        content: [
+          { 
+            text: 'Honorarnote', 
+            style: 'header', 
+            alignment: 'center' 
+          },
+          {
+            text: 'Rechnungsnr.: ' + $scope.invoice.id,
+            alignment: 'right',
+            margin: [0,0,0,20]
+          },
+          {
+            alignment: 'justify',
+            margin: [0,0,0,20],
+            columns: [
+              [
+                {
+                  text: 'Aussteller',
+                  bold: true
+                },
+                {
+                  text: $scope.invoice.issuer.last_name + ' ' + $scope.invoice.issuer.first_name
+                },
+                {
+                  text: $scope.invoice.issuer.address.street_address
+                },
+                {
+                  text: $scope.invoice.issuer.address.postal_code + ' ' + $scope.invoice.issuer.address.town
+                },
+                {
+                  text: $scope.invoice.issuer.address.country
+                }
+              ],
+              [
+                {
+                  text: 'Kunde',
+                  bold: true
+                },
+                {
+                  text: $scope.invoice.customer.last_name + ' ' + $scope.invoice.customer.first_name
+                },
+                {
+                  text: $scope.invoice.customer.address.street_address
+                },
+                {
+                  text: $scope.invoice.customer.address.postal_code + ' ' + $scope.invoice.customer.address.town
+                },
+                {
+                  text: $scope.invoice.customer.address.country
+                }
+              ]
+            ],
+          },
+          {
+            table: {
+                body: [
+                    //Fill in with foreach loop here
+                ]
+            
+            }
+           } 
+        ],
+        styles: {
+          header: {
+            fontSize: 26,
+            bold: true,
+            alignment: 'justify',
+            margin: [0,0,0,20]
+          }
+        }
+      };
+
+      var table_body = Array();
+      table_body[0] = ['Dienstleistung', 'Menge', 'Datum', 'Kosten netto', 'Steuersatz', 'Kosten Brutto'];
+      table_body[1] = ['', '', '', '', '', ''];
+      for(var i = 0; i<$scope.consumedServices.length; i++) {
+        table_body[i+2] = Array();
+        table_body[i+2][0] = $scope.consumedServices[i].service.name;
+        table_body[i+2][1] = String($scope.consumedServices[i].consumed);
+        table_body[i+2][2] = String($scope.consumedServices[i].date_consumed);
+        table_body[i+2][3] = '€ ' +  String(parseFloat($scope.consumedServices[i].consumed * $scope.consumedServices[i].service.cost).toFixed(2));
+
+        if($scope.consumedServices[i].service.vat_type == 'STVAT' && $scope.invoice.customer.is_vat_exempt == false)
+          table_body[i+2][4] = '20%';
+        else
+          table_body[i+2][4] = 'nein'
+
+        table_body[i+2][5] = '€ ' + String(parseFloat($scope.consumedServices[i].gross).toFixed(2));
+      }
+
+      table_body[table_body.length] = ['', '', '', '', '', ''];
+      table_body[table_body.length] = ['Summe', '', '', '€ '+ String(parseFloat($scope.netAmount).toFixed(2)), '', '€ '+ String(parseFloat($scope.grossAmount).toFixed(2))];
+
+      dd['content'][3]['table']['body'] = table_body;
+
+      console.log(dd);
+
+      pdfMake.createPdf(dd).download();
+
+    };
+
+    $scope.verifyNewConsumedServiceInput = function() {
+      return true;
+    };
 }]);  
