@@ -8,7 +8,7 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a class="navbar-brand" href="index.html">Avocado</a>
+    <a class="navbar-brand" href="index.html">Honorarnotenverwaltung</a>
   </div>
   <!-- Top Menu Items -->
   <ul class="nav navbar-right top-nav">
@@ -37,11 +37,17 @@
   <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav side-nav">
-      <li class="active" ng-show="$root.navActive === 'dashboard'">
+      <!--<li class="active" ng-show="$root.navActive === 'dashboard'">
         <a href="./#"><i class="fa fa-fw fa-dashboard"></i>Dashboard</a>
       </li>
       <li ng-show="$root.navActive != 'dashboard'">
         <a href="./#"><i class="fa fa-fw fa-dashboard"></i>Dashboard</a>
+      </li>-->
+      <li class="active" ng-show="$root.navActive === 'invoices'">
+        <a href="./#invoices"><i class="fa fa-fw fa-check-circle-o"></i> Rechnungen</a>
+      </li>
+      <li ng-show="$root.navActive != 'invoices'">
+        <a href="./#invoices"><i class="fa fa-fw fa-check-circle-o"></i> Rechnungen</a>
       </li>
       <li class="active" ng-show="$root.navActive === 'customer_management'">
         <a href="./#customers"><i class="fa fa-fw fa-group"></i> Kundenverwaltung</a>
@@ -60,12 +66,6 @@
       </li>
       <li ng-show="$root.navActive != 'consumedservices'">
         <a href="./#consumedservices"><i class="fa fa-fw fa-check-circle-o"></i> Konsumierte Dienstleistungen</a>
-      </li>
-      <li class="active" ng-show="$root.navActive === 'invoices'">
-        <a href="./#invoices"><i class="fa fa-fw fa-check-circle-o"></i> Rechnungen</a>
-      </li>
-      <li ng-show="$root.navActive != 'invoices'">
-        <a href="./#invoices"><i class="fa fa-fw fa-check-circle-o"></i> Rechnungen</a>
       </li>
       <li class="active" ng-show="$root.navActive == 'settings'">
         <a href="./#settings"><i class="fa fa-fw fa-cog"></i> Einstellungen</a>  

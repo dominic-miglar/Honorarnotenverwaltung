@@ -13,7 +13,9 @@ customersCtrl.controller('CustomersCtrl', ['$rootScope', '$scope', '$location', 
     $scope.updateView();
 
     $scope.createNewCustomer = function(newCustomer) {
+	if (newCustomer.birthdate !== undefined)	
         newCustomer.birthdate = newCustomer.birthdate + "T00:00";
+		
       promise = Api.createNewCustomer(newCustomer);
       promise.then(function(result) {
         console.log('Successfully created new customer.');

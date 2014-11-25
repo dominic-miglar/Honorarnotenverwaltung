@@ -67,16 +67,18 @@ consumedServicesCtrl.controller('InvoicesCtrl', ['$rootScope', '$scope', '$locat
       $scope.createNewInvoice = function(newInvoice) {
         newInvoice.customer = newInvoice.customer.id;
           Api.getCurrentUser().then(function(response) {
-            newInvoice.issuer = response.data.id;
-            promise = Api.createNewInvoice(newInvoice);
-            promise.then(function(result) {
-                console.log('Successfully created new invoice.');
-                $scope.updateView();
-            },
-            function(result) {
-              console.log('Failed to create new invoice.')
-              $scope.updateView();
-            });
+			Api.getUserProfile(response.data.id).then(function(response2) {		  
+				newInvoice.issuer = response2.data[0].id;
+				promise = Api.createNewInvoice(newInvoice);
+				promise.then(function(result) {
+					console.log('Successfully created new invoice.');
+					$scope.updateView();
+				},
+				function(result) {
+				  console.log('Failed to create new invoice.')
+				  $scope.updateView();
+				});
+    		});
           });
       };
 

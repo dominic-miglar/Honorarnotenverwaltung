@@ -41,9 +41,8 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
               $scope.services = resp2.data;
         });
 
-        Api.getUserProfile($scope.invoice.issuer).then(function(response) {
-          $scope.invoice.issuer = response.data[0];
-          // console.log($scope.invoice.issuer);
+        Api.getUserProfileByID($scope.invoice.issuer).then(function(response) {
+          $scope.invoice.issuer = response.data;
         });
 
       });

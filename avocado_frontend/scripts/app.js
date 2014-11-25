@@ -23,9 +23,9 @@ avocadoApp.config(['$routeProvider', '$locationProvider', '$httpProvider',
     function AppConfig($routeProvider, $locationProvider, $httpProvider) {
         $routeProvider.
         when('/', {
-            title: 'avocado Home',
-            templateUrl: 'views/main.html',
-            controller: 'MainCtrl'
+            title: 'Rechnungen',
+            templateUrl: 'views/invoices.html',
+            controller: 'InvoicesCtrl'
         }).
         when('/customers/:customerId/', {
             title: 'Kunde - Detail',
