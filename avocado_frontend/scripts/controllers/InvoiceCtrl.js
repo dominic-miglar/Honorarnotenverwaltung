@@ -276,12 +276,14 @@ invoiceCtrl.controller('InvoiceCtrl', ['$rootScope', '$scope', '$location', '$ro
         table_body[i+2][5] = '€ ' + String(parseFloat($scope.consumedServices[i].gross).toFixed(2));
       }
 
+      //if($scope.invoice.customer.is_vat_exempt) {
+      //  dd['content'][0]['text'] = 'Rechnung';
+      //}
+
       table_body[table_body.length] = ['', '', '', '', '', ''];
       table_body[table_body.length] = ['Summe', '', '', '€ '+ String(parseFloat($scope.netAmount).toFixed(2)), '', '€ '+ String(parseFloat($scope.grossAmount).toFixed(2))];
 
       dd['content'][3]['table']['body'] = table_body;
-
-      console.log(dd);
 
       pdfMake.createPdf(dd).download();
 
