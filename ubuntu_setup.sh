@@ -6,16 +6,16 @@ AVOCADO_USER="avocado"
 AVOCADO_BACKEND_IP="192.168.78.128"
 AVOCADO_BACKEND_PORT="8000"
 
-AVOCADO_NEW_USER_NAME="myuser"
-AVOCADO_NEW_USER_EMAIL="myuser@gmail.com"
-AVOCADO_NEW_USER_PASSWORD="myuserpassword"
-AVOCADO_NEW_USER_FIRSTNAME="User"
-AVOCADO_NEW_USER_LASTNAME="My"
+#AVOCADO_NEW_USER_NAME="myuser"
+#AVOCADO_NEW_USER_EMAIL="myuser@gmail.com"
+#AVOCADO_NEW_USER_PASSWORD="myuserpassword"
+#AVOCADO_NEW_USER_FIRSTNAME="User"
+#AVOCADO_NEW_USER_LASTNAME="My"
 
 set_up()
 {
     avocado_setup_init
-    #install_apt_dependencies
+    install_apt_dependencies
     create_user
     clone_git_repository
     configure_apache
@@ -27,8 +27,8 @@ set_up()
 clean_up()
 {
     echo "Cleaning up..."
-    sudo rm -rf /home/avocado/
-    sudo userdel avocado
+    sudo rm -rf /home/$AVOCADO_USER/
+    sudo userdel $AVOCADO_USER
 }
 
 run_backend_server()
@@ -41,6 +41,7 @@ run_backend_server()
 avocado_setup_init()
 {
     set -e
+    introduction_welcome
 }
 
 # For later: To fill variables with data, stop using constants like above
@@ -48,14 +49,23 @@ introduction_welcome()
 {
     clear
     echo "Welcome to the avocado setup!"
+    echo "Before we begin: Let's set up some things!"
     echo ""
-    echo "What's your name?: "
-    read name
+    echo "What's your name? "
+    echo "Firstname: "
+    read AVOCADO_NEW_USER_FIRSTNAME
     echo ""
-    echo "Hello $name!"
+    echo "Lastname: "
+    read AVOCADO_NEW_USER_LASTNAME
+    echo "Hello $AVOCADO_NEW_USER_FIRSTNAME $AVOCADO_NEW_USER_LASTNAME !"
     echo ""
+    echo "What's your email? :"
+    read AVOCADO_NEW_USER_EMAIL
+    echo ""
+    echo "Which username would you prefer? :"
+    read AVOCADO_NEW_USER_NAME
     echo "Which password should we set for your new account?"
-    read -s password 
+    read -s AVOCADO_NEW_USER_PASSWORD 
     echo ""
     echo "We're setting up the software.. Please wait.."
     echo ""
@@ -80,7 +90,9 @@ configure_apache()
 {
     clear
     echo "Copying apache configuration files..."
+    echo -e "# avocado default Apache configuration\n\nAlias /avocado /home/avocado/avocado/avocado_frontend\n\n<Directory /home/avocado>\n    AllowOverride None\n    Require all granted\n</Directory>\n\n<Directory /home/avocado/avocado/avocado_frontend>\n    Order allow,deny\n    Allow from all\n</Directory>\n\n" > avocado_apache.conf
     sudo cp avocado_apache.conf /etc/apache2/conf-enabled/avocado.conf
+    rm avocado_apache.conf
     echo "Restarting apache2 server..."
     sudo service apache2 restart
 }
@@ -132,4 +144,3 @@ create_new_user()
 clean_up
 set_up
 run_backend_server
-
