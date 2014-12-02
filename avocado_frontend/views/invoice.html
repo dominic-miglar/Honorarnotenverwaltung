@@ -118,10 +118,10 @@
                   </tr>
                   <tr>
                     <td class="active" ng-show="editEnabled == false" class="active">
-                      {{ invoice.exhibition_date }}
+                      {{ invoice.exhibition_date | date: 'dd.MM.yyyy H:m' }}
                     </td>
                     <td ng-show="editEnabled != false">
-                      {{ invoice.exhibition_date }}
+                      {{ invoice.exhibition_date | date: 'dd.MM.yyyy H:m' }}
                     </td>
                     <td></td>
                   </tr>

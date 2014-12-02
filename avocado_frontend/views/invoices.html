@@ -82,7 +82,7 @@
                     <tr ng-repeat="invoice in invoices | orderBy:orderByField:reverseSort | filter:invoicefilter">
                       <td><a href="#/invoices/{{invoice.id}}">{{ invoice.id }}</td>
                       <td>{{ invoice.customer.first_name }}&nbsp;{{ invoice.customer.last_name }}</td>
-                      <td>{{ invoice.exhibition_date }}</td>
+                      <td>{{ invoice.exhibition_date | date: 'dd.MM.yyyy H:m'}}</td>
                       <td>
                         <span class="label label-warning" ng-show="invoice.status == 'OPN'">
                           Offen

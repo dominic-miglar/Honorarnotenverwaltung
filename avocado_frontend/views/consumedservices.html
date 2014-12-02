@@ -124,7 +124,7 @@
                         </span>
                       </td>
                       <td>
-                        {{ consumedService.date_consumed }}
+                        {{ consumedService.date_consumed | date: 'dd.MM.yyyy H:m' }}
                       </td>
                     </tr>
                   </tbody>
