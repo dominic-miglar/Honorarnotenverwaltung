@@ -10,121 +10,128 @@
               <i class="fa fa-dashboard"></i>  <a href="./#consumedservices/">Konsumierte Dienstleistungen</a>
             </li>
           </ol>
-          <h1 class="page-header">
-            Konsumierte Dienstleistungen
-          </h1>
-          <!-- ############################################################################### -->
-          <form class="navbar-form">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#consumeServiceModal">
-              <i class="fa fa-plus"></i> Neuen Dienst konsumieren
-              </button>
-              <div class="input-group pull-right">
-                <div class="pull-right">
-                  <input type="text" class="form-control" placeholder="Search" name="q" ng-model="consumedservicesfilter">
-                </div>
-                <div class="input-group-btn">
-                  <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
+          <div ng-hide="isLoggedIn">
+            <h1 class="page-header">
+            Bitte loggen Sie sich ein!
+            </h1>
+          </div>
+          <div ng-show="isLoggedIn">
+            <h1 class="page-header">
+              Konsumierte Dienstleistungen
+            </h1>
+            <!-- ############################################################################### -->
+            <form class="navbar-form">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#consumeServiceModal">
+                <i class="fa fa-plus"></i> Neuen Dienst konsumieren
+                </button>
+                <div class="input-group pull-right">
+                  <div class="pull-right">
+                    <input type="text" class="form-control" placeholder="Search" name="q" ng-model="consumedservicesfilter">
+                  </div>
+                  <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i>
+                    </button>
+                  </div>
+                  <button type="button" class="btn btn-default pull-right" ng-click="updateView()"><i class="glyphicon glyphicon-refresh"></i>
                   </button>
                 </div>
-                <button type="button" class="btn btn-default pull-right" ng-click="updateView()"><i class="glyphicon glyphicon-refresh"></i>
-                </button>
+              </form>
+              <div class="table-condensed table-responsive">
+                <table class="table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>
+                        <a ng-click="orderByField='id'; reverseSort = !reverseSort">
+                          K.D.Nr. &nbsp;
+                          <span ng-show="orderByField == 'id'">
+                          <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
+                          <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
+                          </span>
+                        </a>
+                      </th>
+                      <th>
+                        <a ng-click="orderByField='service'; reverseSort = !reverseSort">
+                          Dienstleistung &nbsp;
+                          <span ng-show="orderByField == 'service'">
+                          <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
+                          <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
+                          </span>
+                        </a>
+                      </th>
+                      <th>
+                        <a ng-click="orderByField='customer'; reverseSort = !reverseSort">
+                          Kunde &nbsp;
+                          <span ng-show="orderByField == 'customer'">
+                          <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
+                          <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
+                          </span>
+                        </a>
+                      </th>
+                      <th>
+                        <a ng-click="orderByField='invoice'; reverseSort = !reverseSort">
+                          Rechnung &nbsp;
+                          <span ng-show="orderByField == 'invoice'">
+                          <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
+                          <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
+                          </span>
+                        </a>
+                      </th>
+                      <th>
+                        <a ng-click="orderByField='consumed'; reverseSort = !reverseSort">
+                          Einheiten Konsumiert &nbsp;
+                          <span ng-show="orderByField == 'consumed'">
+                          <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
+                          <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
+                          </span>
+                        </a>
+                      </th>
+                      <th>
+                        <a ng-click="orderByField='date_consumed'; reverseSort = !reverseSort">
+                          Datum &nbsp;
+                          <span ng-show="orderByField == 'date_consumed'">
+                          <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
+                          <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
+                          </span>
+                        </a>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="consumedService in consumedServices | orderBy:orderByField:reverseSort | filter:consumedservicesfilter">
+                      <td>{{ consumedService.id }}</td>
+                      <td>
+                        <a href="#consumedservices/{{consumedService.service.id}}/">
+                          {{ consumedService.service.name }}
+                        </a>
+                      </td>
+                      <td>
+                        <a href="#customers/{{ consumedService.customer.id }}">
+                          {{ consumedService.customer.first_name }} {{ consumedService.customer.last_name }}
+                        </a>
+                      </td>
+                      <td>
+                        <a href="#invoices/{{ consumedService.invoice }}">
+                          {{ consumedService.invoice}}
+                        </a>
+                      </td>
+                      <td>
+                        {{ consumedService.consumed }}
+                        <span ng-show="consumedService.service.billing_type == 'HR'">
+                          Stunde(n)
+                        </span>
+                        <span ng-show="consumedService.service.billing_type == 'FR'">
+                          Einheit(en)
+                        </span>
+                      </td>
+                      <td>
+                        {{ consumedService.date_consumed }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-            </form>
-            <div class="table-condensed table-responsive">
-              <table class="table table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th>
-                      <a ng-click="orderByField='id'; reverseSort = !reverseSort">
-                        K.D.Nr. &nbsp;
-                        <span ng-show="orderByField == 'id'">
-                        <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
-                        <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
-                        </span>
-                      </a>
-                    </th>
-                    <th>
-                      <a ng-click="orderByField='service'; reverseSort = !reverseSort">
-                        Dienstleistung &nbsp;
-                        <span ng-show="orderByField == 'service'">
-                        <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
-                        <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
-                        </span>
-                      </a>
-                    </th>
-                    <th>
-                      <a ng-click="orderByField='customer'; reverseSort = !reverseSort">
-                        Kunde &nbsp;
-                        <span ng-show="orderByField == 'customer'">
-                        <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
-                        <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
-                        </span>
-                      </a>
-                    </th>
-                    <th>
-                      <a ng-click="orderByField='invoice'; reverseSort = !reverseSort">
-                        Rechnung &nbsp;
-                        <span ng-show="orderByField == 'invoice'">
-                        <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
-                        <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
-                        </span>
-                      </a>
-                    </th>
-                    <th>
-                      <a ng-click="orderByField='consumed'; reverseSort = !reverseSort">
-                        Einheiten Konsumiert &nbsp;
-                        <span ng-show="orderByField == 'consumed'">
-                        <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
-                        <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
-                        </span>
-                      </a>
-                    </th>
-                    <th>
-                      <a ng-click="orderByField='date_consumed'; reverseSort = !reverseSort">
-                        Datum &nbsp;
-                        <span ng-show="orderByField == 'date_consumed'">
-                        <span class="glyphicon glyphicon-sort-by-attributes" ng-show="!reverseSort"></span>
-                        <span class="glyphicon glyphicon-sort-by-attributes-alt" ng-show="reverseSort"></span>
-                        </span>
-                      </a>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="consumedService in consumedServices | orderBy:orderByField:reverseSort | filter:consumedservicesfilter">
-                    <td>{{ consumedService.id }}</td>
-                    <td>
-                      <a href="#consumedservices/{{consumedService.service.id}}/">
-                        {{ consumedService.service.name }}
-                      </a>
-                    </td>
-                    <td>
-                      <a href="#customers/{{ consumedService.customer.id }}">
-                        {{ consumedService.customer.first_name }} {{ consumedService.customer.last_name }}
-                      </a>
-                    </td>
-                    <td>
-                      <a href="#invoices/{{ consumedService.invoice }}">
-                        {{ consumedService.invoice}}
-                      </a>
-                    </td>
-                    <td>
-                      {{ consumedService.consumed }}
-                      <span ng-show="consumedService.service.billing_type == 'HR'">
-                        Stunde(n)
-                      </span>
-                      <span ng-show="consumedService.service.billing_type == 'FR'">
-                        Einheit(en)
-                      </span>
-                    </td>
-                    <td>
-                      {{ consumedService.date_consumed }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          <!-- ############################################################################### -->
+            <!-- ############################################################################### -->
+          </div>
         </div>
       </div>
       <!-- /.row -->
